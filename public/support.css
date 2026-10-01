@@ -1,0 +1,350 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@300;400;500&display=swap");
+:root {
+  --bg: #071522;
+  --bg2: #0c1e2d;
+  --hdr: #081623;
+  --gold: #d9bc80;
+  --gold-dark: #e6cfa2;
+  --gold-deep: #a58850;
+  --ink: #d3dce4;
+  --ink-soft: #a4b1bd;
+  --green-900: #ecf0f3;
+  --green-700: #d9bc80;
+  --card: #ffffff03;
+  --radius: 4px;
+  --shadow: none;
+  --grad: linear-gradient(90deg, #e2e9ee, #d9bc80);
+}
+body {
+  font-family: "DM Sans", sans-serif;
+  font-size: 15px;
+}
+h1,
+h2,
+h3,
+h4,
+.brand .name {
+  font-family: Manrope, sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.035em;
+}
+h1 {
+  font-size: clamp(36px, 5vw, 60px) !important;
+  line-height: 1.15 !important;
+}
+h2 {
+  font-size: clamp(28px, 3vw, 40px);
+}
+.hero {
+  background: radial-gradient(ellipse at 75% 30%, #24394b, #081623 65%);
+  padding: 65px 0 !important;
+}
+.hero:after,
+.hero:before,
+#bgfx,
+#intro,
+.butterflies,
+.theme-btn {
+  display: none !important;
+}
+.hero-inner {
+  padding: 15px 0 !important;
+}
+.hero .lead {
+  font-size: 16px;
+  max-width: 620px;
+}
+.card,
+.plan,
+.svc,
+.contact-card,
+.cta-band,
+.notice {
+  border-radius: 4px !important;
+  box-shadow: none !important;
+  background: #ffffff03 !important;
+  border: 1px solid #ffffff20 !important;
+}
+.card:hover,
+.plan:hover,
+.svc:hover {
+  transform: none !important;
+}
+.card {
+  padding: 30px;
+}
+.card .icon,
+.ci {
+  filter: grayscale(1);
+  opacity: 0.65;
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+.btn,
+.cta {
+  border-radius: 2px !important;
+  font-size: 12px !important;
+  box-shadow: none !important;
+}
+.btn-gold,
+.cta {
+  background: #d9bc80 !important;
+  color: #101d29 !important;
+}
+.nav-wrap {
+  min-height: 90px;
+}
+.brand .name {
+  font-size: 17px;
+}
+.brand .name small {
+  font-size: 9px;
+  letter-spacing: 0.13em;
+}
+.mark-logo {
+  width: 42px !important;
+  height: 42px !important;
+}
+.mark-logo * {
+  animation: none !important;
+}
+section {
+  padding: 65px 0;
+}
+.rv {
+  opacity: 1 !important;
+  transform: none !important;
+}
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+}
+.lead-form input,
+.lead-form select,
+.lead-form textarea {
+  background: #081623 !important;
+  border: 1px solid #ffffff30 !important;
+  color: #ecf0f3 !important;
+  border-radius: 3px !important;
+}
+.lead-form .btn {
+  min-height: 48px;
+}
+.checks li {
+  padding-bottom: 8px;
+}
+.hbchat,
+.hc-head,
+.hc-in {
+  background: #0c1d2c !important;
+}
+.hbchat {
+  border: 1px solid #d9bc8060 !important;
+  max-height: calc(100dvh - 110px);
+  width: min(380px, calc(100vw - 30px)) !important;
+}
+.hc-msgs {
+  max-height: 45dvh;
+}
+.hc-note {
+  font-size: 10px;
+}
+.hbchat-btn {
+  background: #152b3c !important;
+  color: #d9bc80 !important;
+  border: 1px solid #d9bc8090 !important;
+  box-shadow: 0 5px 20px #0005 !important;
+  font-family: Manrope !important;
+}
+.wa-float {
+  display: none;
+}
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+}
+.check-item input {
+  accent-color: #b39559;
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.checks li:has(.check-item):before {
+  display: none;
+}
+.checks li:has(.check-item) {
+  padding-left: 0;
+}
+.check-item:has(input:checked) {
+  opacity: 0.65;
+  text-decoration: line-through;
+}
+.check-progress {
+  color: var(--gold);
+  margin-top: 20px;
+  font-size: 13px;
+}
+.form-error {
+  color: #f0c497;
+  margin-top: 14px;
+}
+.form-note {
+  font-size: 11px !important;
+  color: var(--ink-soft);
+  margin-top: 15px;
+}
+.hc-in input {
+  min-width: 0;
+}
+.hamburger {
+  cursor: pointer;
+}
+#navtoggle {
+  position: absolute;
+  opacity: 0;
+  display: block !important;
+  width: 1px;
+  height: 1px;
+}
+header:has(#navtoggle:focus-visible) .hamburger {
+  outline: 2px solid var(--gold);
+}
+@media (max-width: 800px) {
+  .nav-wrap {
+    min-height: 78px;
+  }
+  .brand .name {
+    font-size: 14px;
+  }
+  .brand .name small {
+    font-size: 8px;
+  }
+  .hero {
+    padding: 45px 0 !important;
+  }
+  .card,
+  .contact-card {
+    padding: 24px !important;
+  }
+  .grid.c2,
+  .grid.c3,
+  .grid.c4 {
+    grid-template-columns: 1fr !important;
+  }
+  .container {
+    width: 86% !important;
+  }
+  .fr {
+    grid-template-columns: 1fr !important;
+  }
+  .contact-line a {
+    overflow-wrap: anywhere;
+  }
+  section {
+    padding: 45px 0;
+  }
+  .hbchat {
+    right: 15px !important;
+  }
+  .hbchat-btn {
+    right: 18px !important;
+  }
+  nav.main {
+    background: #0c1d2c !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *:before,
+  *:after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+@media print {
+  header,
+  .topbar,
+  footer,
+  .hbchat,
+  .hbchat-btn,
+  .wa-float,
+  .cta-band,
+  .btn {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+    color: #111 !important;
+  }
+  .card {
+    break-inside: avoid;
+    background: white !important;
+    color: #111 !important;
+  }
+  .hero {
+    background: white !important;
+  }
+  .gx,
+  h1,
+  h2,
+  h3,
+  p,
+  li {
+    color: #111 !important;
+    -webkit-text-fill-color: #111 !important;
+  }
+  .grid.c2 {
+    display: block;
+  }
+  .card {
+    margin-bottom: 15px;
+  }
+  .check-item input {
+    appearance: auto;
+  }
+  section {
+    padding: 12px 0;
+  }
+}
+.hero h1 {
+  font-family: Manrope, sans-serif !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.045em !important;
+}
+.hero .lead {
+  font-weight: 400 !important;
+}
+.hero .kicker {
+  border: 0 !important;
+  background: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  color: var(--gold) !important;
+  font-size: 10px !important;
+  letter-spacing: 0.18em;
+}
+.topbar {
+  font-size: 11px !important;
+}
+.contact-card {
+  width: 100%;
+  min-width: 0;
+}
+.contact-line > div:last-child {
+  min-width: 0;
+}
+.card h3,
+.contact-card h3 {
+  font-weight: 500 !important;
+}
