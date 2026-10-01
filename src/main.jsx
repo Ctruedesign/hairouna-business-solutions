@@ -85,9 +85,96 @@ const faqs = [
     "Hairouna offers CRA assistance. Keep the notice or correspondence you received so the situation can be reviewed.",
   ],
 ];
+const INTRO_LOGO =
+  "data:image/svg+xml," +
+  encodeURIComponent(
+    '<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" aria-label="Hairouna logo"><defs><radialGradient id="mOnyx" cx="35%" cy="26%" r="90%"><stop offset="0" stop-color="#27498a"/><stop offset=".45" stop-color="#102450"/><stop offset="1" stop-color="#050b1c"/></radialGradient><radialGradient id="mHalo" cx="50%" cy="50%" r="50%"><stop offset=".55" stop-color="#ffd76b" stop-opacity="0"/><stop offset=".8" stop-color="#ffd76b" stop-opacity=".28"/><stop offset="1" stop-color="#ffd76b" stop-opacity="0"/></radialGradient><linearGradient id="mRing" x1="0" y1="0" x2=".85" y2="1"><stop offset="0" stop-color="#fff7d6"/><stop offset=".18" stop-color="#ffdf7e"/><stop offset=".38" stop-color="#f0b93c"/><stop offset=".55" stop-color="#9a6d1e"/><stop offset=".7" stop-color="#5e4312"/><stop offset=".85" stop-color="#e3b64a"/><stop offset="1" stop-color="#ffe9a8"/></linearGradient><linearGradient id="mSilver" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4f8ff"/><stop offset=".5" stop-color="#8fa3c0"/><stop offset="1" stop-color="#dfe8f5"/></linearGradient><linearGradient id="mFace" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3bd"/><stop offset=".38" stop-color="#ffd76b"/><stop offset=".55" stop-color="#d9a83c"/><stop offset=".82" stop-color="#8a6526"/><stop offset="1" stop-color="#c79b3d"/></linearGradient><linearGradient id="mEdge" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffffff" stop-opacity=".9"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></linearGradient><linearGradient id="mSheen" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffffff" stop-opacity="0"/><stop offset=".5" stop-color="#ffffff" stop-opacity=".45"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></linearGradient><clipPath id="mClip"><circle cx="120" cy="120" r="110"/></clipPath></defs><circle class="mhalo" cx="120" cy="120" r="118" fill="url(#mHalo)"/><circle cx="120" cy="120" r="110" fill="url(#mOnyx)"/><circle cx="120" cy="120" r="109" fill="none" stroke="#4f79c9" stroke-width="1" opacity=".45"/><circle cx="120" cy="120" r="103" fill="none" stroke="url(#mRing)" stroke-width="8"/><circle cx="120" cy="120" r="96.5" fill="none" stroke="url(#mSilver)" stroke-width="1.6" opacity=".8"/><g class="mrot"><circle cx="120" cy="120" r="103" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="30 617" stroke-opacity=".85"/><circle cx="120" cy="120" r="103" fill="none" stroke="#ffe9a8" stroke-width="2" stroke-linecap="round" stroke-dasharray="14 633" stroke-dashoffset="-320" stroke-opacity=".7"/></g><g class="mrot2"><circle cx="120" cy="120" r="96.5" fill="none" stroke="#f4f8ff" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="20 586" stroke-opacity=".65"/></g><g><rect x="76" y="66" width="16" height="108" fill="url(#mFace)"/><rect x="76" y="66" width="3.4" height="108" fill="url(#mEdge)" opacity=".6"/><rect x="148" y="66" width="16" height="108" fill="url(#mFace)"/><rect x="148" y="66" width="3.4" height="108" fill="url(#mEdge)" opacity=".6"/><rect x="92" y="112" width="56" height="15" fill="url(#mFace)"/><rect x="92" y="112" width="56" height="3" fill="#fff7d6" opacity=".7"/></g><g clip-path="url(#mClip)"><rect class="mswp" x="60" y="0" width="90" height="240" fill="url(#mSheen)"/></g><g fill="#fff8dc"><path class="mgl" d="M62 44 l2.2 5.6 5.6 2.2 -5.6 2.2 -2.2 5.6 -2.2 -5.6 -5.6 -2.2 5.6 -2.2 Z"/><path class="mgl g2" d="M178 182 l1.9 4.8 4.8 1.9 -4.8 1.9 -1.9 4.8 -1.9 -4.8 -4.8 -1.9 4.8 -1.9 Z"/><path class="mgl g3" fill="#dfe8f5" d="M186 70 l1.6 4 4 1.6 -4 1.6 -1.6 4 -1.6 -4 -4 -1.6 4 -1.6 Z"/></g></svg>',
+  );
+
+function BrandIntro({ onFinish }) {
+  const skip = React.useRef(null);
+  React.useEffect(() => {
+    const previous = document.activeElement;
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    skip.current?.focus();
+    const timer = setTimeout(onFinish, 5200);
+    const escape = (event) => {
+      if (event.key === "Escape") onFinish();
+    };
+    window.addEventListener("keydown", escape);
+    return () => {
+      clearTimeout(timer);
+      document.body.style.overflow = overflow;
+      window.removeEventListener("keydown", escape);
+      previous?.focus();
+    };
+  }, [onFinish]);
+  return (
+    <div
+      className="brand-intro"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Welcome to Hairouna"
+    >
+      <div className="intro-orbit" aria-hidden="true" />
+      <div className="intro-particles" aria-hidden="true">
+        {Array.from({ length: 36 }, (_, i) => (
+          <i
+            key={i}
+            style={{
+              "--angle": `${i * 137.5}deg`,
+              "--distance": `${24 + (i % 7) * 5}vmin`,
+              "--delay": `${(i % 6) * 45}ms`,
+            }}
+          />
+        ))}
+      </div>
+      <div className="intro-brand">
+        <img src={INTRO_LOGO} alt="Hairouna" width="112" height="112" />
+        <p className="intro-line first">Your Taxes.</p>
+        <p className="intro-line second">We Prepare.</p>
+        <p className="intro-promise">
+          You Relax — <b>We Do The Math.</b>
+        </p>
+        <p className="intro-name">Hairouna Business Solutions Inc.</p>
+      </div>
+      <button className="intro-skip" ref={skip} onClick={onFinish}>
+        Skip intro <span>↗</span>
+      </button>
+      <div className="intro-timeline" aria-hidden="true" />
+    </div>
+  );
+}
+
 function GlassDocument() {
   return (
-    <div className="document-scene" aria-hidden="true">
+    <div
+      className="document-scene"
+      aria-hidden="true"
+      onPointerMove={(event) => {
+        if (
+          !window.matchMedia(
+            "(hover: hover) and (prefers-reduced-motion: no-preference)",
+          ).matches ||
+          document.documentElement.dataset.motion === "paused"
+        )
+          return;
+        const box = event.currentTarget.getBoundingClientRect();
+        event.currentTarget.style.setProperty(
+          "--tilt",
+          `${((event.clientX - box.left) / box.width) * 8 - 4}deg`,
+        );
+        event.currentTarget.style.setProperty(
+          "--lift",
+          `${((event.clientY - box.top) / box.height) * -8 + 4}px`,
+        );
+      }}
+      onPointerLeave={(event) => {
+        event.currentTarget.style.setProperty("--tilt", "0deg");
+        event.currentTarget.style.setProperty("--lift", "0px");
+      }}
+    >
       <div className="orbit orbit-one" />
       <div className="orbit orbit-two" />
       <div className="document-shadow" />
@@ -142,318 +229,398 @@ function GlassDocument() {
   );
 }
 function App() {
+  const [intro, setIntro] = React.useState(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+      return false;
+    try {
+      return sessionStorage.getItem("hbs-intro") !== "1";
+    } catch {
+      return true;
+    }
+  });
+  const [paused, setPaused] = React.useState(false);
+  const finishIntro = React.useCallback(() => {
+    try {
+      sessionStorage.setItem("hbs-intro", "1");
+    } catch {}
+    setIntro(false);
+  }, []);
+  React.useEffect(() => {
+    document.documentElement.dataset.motion = paused ? "paused" : "active";
+    return () => {
+      delete document.documentElement.dataset.motion;
+    };
+  }, [paused]);
+  React.useEffect(() => {
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const onChange = () => {
+      if (preference.matches) finishIntro();
+    };
+    preference.addEventListener("change", onChange);
+    if (
+      preference.matches ||
+      paused ||
+      intro ||
+      !("IntersectionObserver" in window)
+    )
+      return () => preference.removeEventListener("change", onChange);
+    const items = [
+      ...document.querySelectorAll(
+        ".section > h2, .section > .kicker, .glass-card, .audience-card, .why-stack > div, .folder, .faq-heading, .contact-panel",
+      ),
+    ];
+    const observer = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in-view");
+            observer.unobserve(entry.target);
+          }
+        }),
+      { threshold: 0.08, rootMargin: "0px 0px -25px 0px" },
+    );
+    items.forEach((item, i) => {
+      item.style.setProperty("--reveal-delay", `${(i % 4) * 65}ms`);
+      item.classList.add("cinema-reveal");
+      observer.observe(item);
+    });
+    return () => {
+      observer.disconnect();
+      items.forEach((item) =>
+        item.classList.remove("cinema-reveal", "in-view"),
+      );
+      preference.removeEventListener("change", onChange);
+    };
+  }, [intro, paused, finishIntro]);
   const [menu, setMenu] = React.useState(false),
     [assistant, setAssistant] = React.useState(false),
     [faq, setFaq] = React.useState(0);
   return (
-    <main>
-      <a className="skip-link" href="#services">
-        Skip to content
-      </a>
-      <header className="nav">
-        <a className="brand" href="#top">
-          <span>H</span>
-          <div>
-            <b>HAIROUNA</b>
-            <small>BUSINESS SOLUTIONS INC.</small>
-          </div>
-        </a>
-        <nav
-          id="main-navigation"
-          aria-label="Main navigation"
-          onClick={() => setMenu(false)}
-          className={menu ? "open" : ""}
-        >
-          <a href="#services">Services</a>
-          <a href="#clients">Who we help</a>
-          <a href="#about">Why Hairouna</a>
-          <a href="#faq">FAQ</a>
-          <a href="#contact">Contact</a>
-          <a className="nav-cta" href="/contact.html">
-            Free consultation
-          </a>
-        </nav>
-        <button
-          className="menu"
-          onClick={() => setMenu(!menu)}
-          aria-label="Toggle navigation"
-          aria-expanded={menu}
-          aria-controls="main-navigation"
-        >
-          {menu ? <X /> : <Menu />}
-        </button>
-      </header>
-      <section className="hero" id="top">
-        <div className="hero-grain" />
-        <div className="hero-glow" />
-        <div className="hero-copy">
-          <div className="eyebrow">
-            <span className="eyebrow-line" /> BRAMPTON, ONTARIO · SERVING CANADA
-          </div>
-          <h1>
-            Your numbers.
-            <br />
-            <em>Our care.</em>
-            <br />
-            Peace of mind.
-          </h1>
-          <p>
-            Tax, bookkeeping and business support that brings clarity to your
-            finances — and a little more calm to your everyday.
-          </p>
-          <div className="actions">
-            <a className="primary" href="/contact.html">
-              Let’s talk about your next step <ChevronRight />
-            </a>
-            <a className="secondary" href="#services">
-              Explore services
-            </a>
-          </div>
-          <div className="trust">
-            <span>
-              <Check />
-              Plain-language guidance
-            </span>
-            <span>
-              <Check />
-              Business-focused
-            </span>
-            <span>
-              <Check />
-              Virtual support
-            </span>
-          </div>
-        </div>
-        <GlassDocument />
-        <div className="scroll">
-          A CLEARER WAY FORWARD <span>↓</span>
-        </div>
-      </section>
-      <section className="section intro" id="services">
-        <div className="kicker">COMPLETE FINANCIAL SUPPORT</div>
-        <h2>
-          One place for the financial work
-          <br />
-          that keeps life and business moving.
-        </h2>
-        <p className="lead">
-          From personal returns to ongoing corporate support, Hairouna helps
-          make the numbers easier to manage.
-        </p>
-        <div className="service-grid">
-          {services.map(([t, d, I], i) => (
-            <article className="glass-card" key={t}>
-              <div className="icon">
-                <I />
-              </div>
-              <h3>{t}</h3>
-              <p>{d}</p>
-              <a
-                href={
-                  "/services.html#" +
-                  [
-                    "personal-tax",
-                    "corporate-tax",
-                    "bookkeeping",
-                    "payroll",
-                    "gst-hst",
-                    "statements",
-                    "registration",
-                    "audit",
-                  ][i]
-                }
-              >
-                Explore service <ChevronRight size={16} />
-              </a>
-            </article>
-          ))}
-        </div>
-      </section>
-      <section className="section audience" id="clients">
-        <div className="kicker">BUILT AROUND REAL CLIENTS</div>
-        <h2>
-          Your situation isn’t generic.
-          <br />
-          <em>Your support shouldn’t be either.</em>
-        </h2>
-        <div className="audience-row">
-          {audiences.map(([t, d], i) => (
-            <a className="audience-card" href="/contact.html" key={t}>
-              <img src={"/serve-" + (i + 1) + ".jpg"} alt="" loading="lazy" />
-              <span>0{i + 1}</span>
-              <h3>{t}</h3>
-              <p>{d}</p>
-            </a>
-          ))}
-        </div>
-      </section>
-      <section className="section why" id="about">
-        <div>
-          <div className="kicker">WHY HAIROUNA</div>
-          <h2>
-            Less financial noise.
-            <br />
-            More forward motion.
-          </h2>
-          <p className="lead">
-            Financial work should be easier to understand, organize and act on.
-          </p>
-        </div>
-        <div className="why-stack">
-          <div>
-            <b>01</b>
-            <h3>Start with your situation</h3>
-            <p>
-              Tell us what you need without having to know the accounting
-              terminology.
-            </p>
-          </div>
-          <div>
-            <b>02</b>
-            <h3>Get a clear path</h3>
-            <p>
-              Identify the relevant service and information needed to move
-              forward.
-            </p>
-          </div>
-          <div>
-            <b>03</b>
-            <h3>Stay organized</h3>
-            <p>
-              Keep filings, payroll and financial records visible and
-              manageable.
-            </p>
-          </div>
-        </div>
-      </section>
-      <section className="section checklist">
-        <div className="folder">
-          <span>THE HAIROUNA FIELD GUIDE</span>
-          <b>
-            A little preparation.
-            <br />A clearer tax season.
-          </b>
-          <div className="checklist-preview">
-            <span>
-              <Check size={15} /> Income slips & identification
-            </span>
-            <span>
-              <Check size={15} /> Receipts & eligible expenses
-            </span>
-            <span>
-              <Check size={15} /> Self-employment records
-            </span>
-          </div>
-          <small>YOUR CANADIAN TAX CHECKLIST ↗</small>
-        </div>
-        <div>
-          <div className="kicker">PREPARE WITH CONFIDENCE</div>
-          <h2>
-            Know what to gather
-            <br />
-            before you file.
-          </h2>
-          <p className="lead">
-            Use Hairouna’s Canadian tax checklist to organize common slips,
-            receipts and filing information.
-          </p>
-          <a className="primary" href="/checklist.html">
-            Open the checklist <ChevronRight />
-          </a>
-        </div>
-      </section>
-      <section className="section faq-section" id="faq">
-        <div className="faq-heading">
-          <div className="kicker">QUESTIONS, MADE SIMPLE</div>
-          <h2>Frequently asked questions.</h2>
-        </div>
-        <div className="faq-list">
-          {faqs.map(([q, a], i) => (
-            <div className={"faq-item " + (faq === i ? "active" : "")} key={q}>
-              <button
-                onClick={() => setFaq(faq === i ? -1 : i)}
-                aria-expanded={faq === i}
-              >
-                <span>{q}</span>
-                <ChevronDown />
-              </button>
-              {faq === i && <p>{a}</p>}
-            </div>
-          ))}
-        </div>
-      </section>
-      <section className="section contact" id="contact">
-        <div className="contact-panel">
-          <div>
-            <div className="kicker">READY WHEN YOU ARE</div>
-            <h2>Let’s make the next step clear.</h2>
-            <p>
-              Book a free, no-pressure consultation and tell Hairouna what you
-              need help with.
-            </p>
-          </div>
-          <div className="contact-actions">
-            <a className="primary" href="/contact.html">
-              Book a consultation <ChevronRight />
-            </a>
-            <a href="tel:+14169081916">
-              <Phone />
-              (416) 908-1916
-            </a>
-            <a
-              href="https://wa.me/14169081916"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <MessageCircle />
-              WhatsApp
-            </a>
-            <a href="mailto:info@hairounaholdingsinc.com">
-              <Mail />
-              Email Hairouna
-            </a>
-          </div>
-        </div>
-        <div className="location-strip">
-          <span>
-            <MapPin />
-            Brampton, Ontario, Canada
-          </span>
-          <span>In person & virtually across Canada</span>
-        </div>
-      </section>
-      <footer>
-        <div className="brand">
-          <span>H</span>
-          <div>
-            <b>HAIROUNA</b>
-            <small>BUSINESS SOLUTIONS INC.</small>
-          </div>
-        </div>
-        <div className="footer-links">
-          <a href="/services.html">Services</a>
-          <a href="/pricing.html">Pricing</a>
-          <a href="/resources.html">Resources</a>
-          <a href="/contact.html">Contact</a>
-        </div>
-        <small>
-          © {new Date().getFullYear()} Hairouna Business Solutions Inc. All
-          rights reserved.
-          <br />
-          General information only; not professional advice.
-        </small>
-      </footer>
-      <button
-        className="hb"
-        aria-label="Open HB Assistant"
-        aria-expanded={assistant}
-        onClick={() => setAssistant(true)}
+    <>
+      {intro && <BrandIntro onFinish={finishIntro} />}
+      <main
+        inert={intro ? true : undefined}
+        className={intro ? "intro-playing" : "cinema-ready"}
       >
-        <span>HB</span>
-        <i />
-      </button>
-      <Assistant open={assistant} close={() => setAssistant(false)} />
-    </main>
+        <a className="skip-link" href="#services">
+          Skip to content
+        </a>
+        <header className="nav">
+          <a className="brand" href="#top">
+            <span>H</span>
+            <div>
+              <b>HAIROUNA</b>
+              <small>BUSINESS SOLUTIONS INC.</small>
+            </div>
+          </a>
+          <nav
+            id="main-navigation"
+            aria-label="Main navigation"
+            onClick={() => setMenu(false)}
+            className={menu ? "open" : ""}
+          >
+            <a href="#services">Services</a>
+            <a href="#clients">Who we help</a>
+            <a href="#about">Why Hairouna</a>
+            <a href="#faq">FAQ</a>
+            <a href="#contact">Contact</a>
+            <a className="nav-cta" href="/contact.html">
+              Free consultation
+            </a>
+          </nav>
+          <button
+            className="menu"
+            onClick={() => setMenu(!menu)}
+            aria-label="Toggle navigation"
+            aria-expanded={menu}
+            aria-controls="main-navigation"
+          >
+            {menu ? <X /> : <Menu />}
+          </button>
+        </header>
+        <section className="hero" id="top">
+          <div className="hero-grain" />
+          <div className="hero-glow" />
+          <div className="hero-copy">
+            <div className="eyebrow">
+              <span className="eyebrow-line" /> BRAMPTON, ONTARIO · SERVING
+              CANADA
+            </div>
+            <h1>
+              Your numbers.
+              <br />
+              <em>Our care.</em>
+              <br />
+              Peace of mind.
+            </h1>
+            <p>
+              Tax, bookkeeping and business support that brings clarity to your
+              finances — and a little more calm to your everyday.
+            </p>
+            <div className="actions">
+              <a className="primary" href="/contact.html">
+                Let’s talk about your next step <ChevronRight />
+              </a>
+              <a className="secondary" href="#services">
+                Explore services
+              </a>
+            </div>
+            <div className="trust">
+              <span>
+                <Check />
+                Plain-language guidance
+              </span>
+              <span>
+                <Check />
+                Business-focused
+              </span>
+              <span>
+                <Check />
+                Virtual support
+              </span>
+            </div>
+          </div>
+          <GlassDocument />
+          <div className="scroll">
+            A CLEARER WAY FORWARD <span>↓</span>
+          </div>
+        </section>
+        <section className="section intro" id="services">
+          <div className="kicker">COMPLETE FINANCIAL SUPPORT</div>
+          <h2>
+            One place for the financial work
+            <br />
+            that keeps life and business moving.
+          </h2>
+          <p className="lead">
+            From personal returns to ongoing corporate support, Hairouna helps
+            make the numbers easier to manage.
+          </p>
+          <div className="service-grid">
+            {services.map(([t, d, I], i) => (
+              <article className="glass-card" key={t}>
+                <div className="icon">
+                  <I />
+                </div>
+                <h3>{t}</h3>
+                <p>{d}</p>
+                <a
+                  href={
+                    "/services.html#" +
+                    [
+                      "personal-tax",
+                      "corporate-tax",
+                      "bookkeeping",
+                      "payroll",
+                      "gst-hst",
+                      "statements",
+                      "registration",
+                      "audit",
+                    ][i]
+                  }
+                >
+                  Explore service <ChevronRight size={16} />
+                </a>
+              </article>
+            ))}
+          </div>
+        </section>
+        <section className="section audience" id="clients">
+          <div className="kicker">BUILT AROUND REAL CLIENTS</div>
+          <h2>
+            Your situation isn’t generic.
+            <br />
+            <em>Your support shouldn’t be either.</em>
+          </h2>
+          <div className="audience-row">
+            {audiences.map(([t, d], i) => (
+              <a className="audience-card" href="/contact.html" key={t}>
+                <img src={"/serve-" + (i + 1) + ".jpg"} alt="" loading="lazy" />
+                <span>0{i + 1}</span>
+                <h3>{t}</h3>
+                <p>{d}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+        <section className="section why" id="about">
+          <div>
+            <div className="kicker">WHY HAIROUNA</div>
+            <h2>
+              Less financial noise.
+              <br />
+              More forward motion.
+            </h2>
+            <p className="lead">
+              Financial work should be easier to understand, organize and act
+              on.
+            </p>
+          </div>
+          <div className="why-stack">
+            <div>
+              <b>01</b>
+              <h3>Start with your situation</h3>
+              <p>
+                Tell us what you need without having to know the accounting
+                terminology.
+              </p>
+            </div>
+            <div>
+              <b>02</b>
+              <h3>Get a clear path</h3>
+              <p>
+                Identify the relevant service and information needed to move
+                forward.
+              </p>
+            </div>
+            <div>
+              <b>03</b>
+              <h3>Stay organized</h3>
+              <p>
+                Keep filings, payroll and financial records visible and
+                manageable.
+              </p>
+            </div>
+          </div>
+        </section>
+        <section className="section checklist">
+          <div className="folder">
+            <span>THE HAIROUNA FIELD GUIDE</span>
+            <b>
+              A little preparation.
+              <br />A clearer tax season.
+            </b>
+            <div className="checklist-preview">
+              <span>
+                <Check size={15} /> Income slips & identification
+              </span>
+              <span>
+                <Check size={15} /> Receipts & eligible expenses
+              </span>
+              <span>
+                <Check size={15} /> Self-employment records
+              </span>
+            </div>
+            <small>YOUR CANADIAN TAX CHECKLIST ↗</small>
+          </div>
+          <div>
+            <div className="kicker">PREPARE WITH CONFIDENCE</div>
+            <h2>
+              Know what to gather
+              <br />
+              before you file.
+            </h2>
+            <p className="lead">
+              Use Hairouna’s Canadian tax checklist to organize common slips,
+              receipts and filing information.
+            </p>
+            <a className="primary" href="/checklist.html">
+              Open the checklist <ChevronRight />
+            </a>
+          </div>
+        </section>
+        <section className="section faq-section" id="faq">
+          <div className="faq-heading">
+            <div className="kicker">QUESTIONS, MADE SIMPLE</div>
+            <h2>Frequently asked questions.</h2>
+          </div>
+          <div className="faq-list">
+            {faqs.map(([q, a], i) => (
+              <div
+                className={"faq-item " + (faq === i ? "active" : "")}
+                key={q}
+              >
+                <button
+                  onClick={() => setFaq(faq === i ? -1 : i)}
+                  aria-expanded={faq === i}
+                >
+                  <span>{q}</span>
+                  <ChevronDown />
+                </button>
+                {faq === i && <p>{a}</p>}
+              </div>
+            ))}
+          </div>
+        </section>
+        <section className="section contact" id="contact">
+          <div className="contact-panel">
+            <div>
+              <div className="kicker">READY WHEN YOU ARE</div>
+              <h2>Let’s make the next step clear.</h2>
+              <p>
+                Book a free, no-pressure consultation and tell Hairouna what you
+                need help with.
+              </p>
+            </div>
+            <div className="contact-actions">
+              <a className="primary" href="/contact.html">
+                Book a consultation <ChevronRight />
+              </a>
+              <a href="tel:+14169081916">
+                <Phone />
+                (416) 908-1916
+              </a>
+              <a
+                href="https://wa.me/14169081916"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <MessageCircle />
+                WhatsApp
+              </a>
+              <a href="mailto:info@hairounaholdingsinc.com">
+                <Mail />
+                Email Hairouna
+              </a>
+            </div>
+          </div>
+          <div className="location-strip">
+            <span>
+              <MapPin />
+              Brampton, Ontario, Canada
+            </span>
+            <span>In person & virtually across Canada</span>
+          </div>
+        </section>
+        <footer>
+          <div className="brand">
+            <span>H</span>
+            <div>
+              <b>HAIROUNA</b>
+              <small>BUSINESS SOLUTIONS INC.</small>
+            </div>
+          </div>
+          <div className="motion-controls">
+            <button onClick={() => setIntro(true)}>Replay intro ↗</button>
+            <button onClick={() => setPaused(!paused)} aria-pressed={paused}>
+              {paused ? "Resume motion" : "Pause motion"}
+            </button>
+          </div>
+          <div className="footer-links">
+            <a href="/services.html">Services</a>
+            <a href="/pricing.html">Pricing</a>
+            <a href="/resources.html">Resources</a>
+            <a href="/contact.html">Contact</a>
+          </div>
+          <small>
+            © {new Date().getFullYear()} Hairouna Business Solutions Inc. All
+            rights reserved.
+            <br />
+            General information only; not professional advice.
+          </small>
+        </footer>
+        <button
+          className="hb"
+          aria-label="Open HB Assistant"
+          aria-expanded={assistant}
+          onClick={() => setAssistant(true)}
+        >
+          <span>HB</span>
+          <i />
+        </button>
+        <Assistant open={assistant} close={() => setAssistant(false)} />
+      </main>
+    </>
   );
 }
 createRoot(document.getElementById("root")).render(<App />);
