@@ -147,84 +147,75 @@ function BrandIntro({ onFinish }) {
   );
 }
 
-function GlassDocument() {
+function GlassDocument({ paused }) {
+  const video = React.useRef(null);
+  const [playing, setPlaying] = React.useState(false);
+  const [failed, setFailed] = React.useState(false);
+  const userPaused = React.useRef(false);
+  const permitted = React.useRef(false);
+  React.useEffect(() => {
+    const element = video.current;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let visible = false;
+    const update = () => {
+      permitted.current = visible && !paused && !reduced.matches && !document.hidden;
+      if (!permitted.current) element.pause();
+      else if (!userPaused.current) element.play().catch(() => {});
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      update();
+    }, { threshold: 0.15 });
+    observer.observe(element);
+    reduced.addEventListener("change", update);
+    document.addEventListener("visibilitychange", update);
+    return () => {
+      permitted.current = false;
+      element.pause();
+      observer.disconnect();
+      reduced.removeEventListener("change", update);
+      document.removeEventListener("visibilitychange", update);
+    };
+  }, [paused]);
+  const toggle = () => {
+    if (video.current.paused) {
+      userPaused.current = false;
+      video.current.play().catch(() => {});
+    } else {
+      userPaused.current = true;
+      video.current.pause();
+    }
+  };
   return (
-    <div
-      className="document-scene"
-      aria-hidden="true"
-      onPointerMove={(event) => {
-        if (
-          !window.matchMedia(
-            "(hover: hover) and (prefers-reduced-motion: no-preference)",
-          ).matches ||
-          document.documentElement.dataset.motion === "paused"
-        )
-          return;
-        const box = event.currentTarget.getBoundingClientRect();
-        event.currentTarget.style.setProperty(
-          "--tilt",
-          `${((event.clientX - box.left) / box.width) * 8 - 4}deg`,
-        );
-        event.currentTarget.style.setProperty(
-          "--lift",
-          `${((event.clientY - box.top) / box.height) * -8 + 4}px`,
-        );
-      }}
-      onPointerLeave={(event) => {
-        event.currentTarget.style.setProperty("--tilt", "0deg");
-        event.currentTarget.style.setProperty("--lift", "0px");
-      }}
-    >
-      <div className="orbit orbit-one" />
-      <div className="orbit orbit-two" />
-      <div className="document-shadow" />
-      <div className="glass-document">
+    <div className="document-scene tour-scene">
+      <div className="orbit orbit-one" aria-hidden="true" />
+      <div className="orbit orbit-two" aria-hidden="true" />
+      <div className="glass-document tour-card">
         <div className="doc-top">
           <span className="doc-mark">H</span>
-          <span>
-            HAIROUNA
-            <br />
-            <small>BUSINESS SOLUTIONS</small>
-          </span>
-          <span className="doc-leaf">✦</span>
+          <span>HAIROUNA<br /><small>BUSINESS SOLUTIONS</small></span>
+          <span className="doc-leaf" aria-hidden="true">✦</span>
         </div>
         <div className="doc-rule" />
-        <div className="doc-heading">
-          <span>CANADIAN PERSONAL TAX</span>
-          <h2>
-            Your next chapter.
-            <br />
-            Clearly prepared.
-          </h2>
-          <b>
-            T1 <small>INCOME TAX RETURN</small>
-          </b>
+        <div className="tour-heading"><span>THE HAIROUNA EXPERIENCE</span><h2>A clearer way forward.<br /><em>See it for yourself.</em></h2></div>
+        <video ref={video} className="site-tour" poster="/hairouna-tour-poster.jpg"
+          muted loop playsInline controls preload="none" aria-label="39-second Hairouna website tour"
+          aria-describedby="tour-description"
+          onPlay={() => { userPaused.current = false; setPlaying(true); }}
+          onPause={() => { if (permitted.current) userPaused.current = true; setPlaying(false); }}
+          onCanPlay={() => setFailed(false)}
+          onError={() => { if (video.current?.error) setFailed(true); }}>
+          <source src="/hairouna-tour-mobile.mp4" type="video/mp4" media="(max-width: 700px)" />
+          <source src="/hairouna-tour.mp4" type="video/mp4" />
+          Your browser does not support video. Explore Hairouna using the service links below.
+        </video>
+        <div className="tour-controls">
+          <button onClick={toggle} disabled={failed} aria-label={playing ? "Pause website tour" : "Play website tour"}>{playing ? "Ⅱ Pause tour" : "▷ Play tour"}</button>
+          <span>39 SECONDS · EXPLORE HAIROUNA</span>
         </div>
-        <div className="doc-fields">
-          <span>01 / PERSONAL INFORMATION</span>
-          <i />
-          <i />
-          <span>02 / INCOME & DEDUCTIONS</span>
-          <i />
-          <i />
-          <i />
-        </div>
-        <div className="doc-bottom">
-          <span>
-            <Check size={20} />
-          </span>
-          <p>
-            Care in every detail.
-            <br />
-            <small>Clarity at every step.</small>
-          </p>
-          <b>H.</b>
-        </div>
+        <p id="tour-description" className="tour-description">{failed ? "The tour couldn’t load. You can still explore every service below." : "Services, people, preparation and support. A short tour of what’s here for you."}</p>
       </div>
-      <div className="document-caption">
-        <span>01 — THE HAIROUNA APPROACH</span>
-        <p>Prepared with care. Built around you.</p>
-      </div>
+      <div className="document-caption"><span>01 — THE HAIROUNA APPROACH</span><p>Prepared with care. Built around you.</p></div>
     </div>
   );
 }
@@ -395,7 +386,9 @@ function App() {
       return true;
     }
   });
-  const [paused, setPaused] = React.useState(false);
+  const [paused, setPaused] = React.useState(() => {
+    try { return sessionStorage.getItem("hbs-motion") === "paused"; } catch { return false; }
+  });
   const finishIntro = React.useCallback(() => {
     try {
       sessionStorage.setItem("hbs-intro", "1");
@@ -404,6 +397,7 @@ function App() {
   }, []);
   React.useEffect(() => {
     document.documentElement.dataset.motion = paused ? "paused" : "active";
+    try { sessionStorage.setItem("hbs-motion", paused ? "paused" : "active"); } catch {}
     return () => {
       delete document.documentElement.dataset.motion;
     };
@@ -540,7 +534,7 @@ function App() {
               </span>
             </div>
           </div>
-          <GlassDocument />
+          <GlassDocument paused={paused || intro} />
           <div className="scroll">
             A CLEARER WAY FORWARD <span>↓</span>
           </div>

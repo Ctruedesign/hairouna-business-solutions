@@ -1,3 +1,4 @@
+@import url("/ambient.css");
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;600;700&family=Manrope:wght@300;400;500;600&display=swap");
 :root {
   --navy: #071522;
@@ -2175,3 +2176,30 @@ html[data-motion="paused"] .clarity-frame {
 .folio-caption {display:none;}
 @media(max-width:899px){.folio-back>b,.folio-middle>b{opacity:0;}}
 @media(prefers-reduced-motion:reduce){.folio-back>b,.folio-middle>b{opacity:0;}}
+
+/* The original glass document becomes a real, accessible video window. */
+.tour-scene { min-width:0; }
+.glass-document.tour-card {
+  width:min(100%, 520px); min-height:0; padding:26px; transform:rotateY(-5deg) rotateZ(1deg);
+  animation:none; background:linear-gradient(135deg,#31485dd9,#102537ed 60%,#253e50de);
+}
+.tour-card::after { display:none; }
+.tour-heading { padding:4px 0 22px; }
+.tour-heading > span { font-size:9px; letter-spacing:.16em; color:var(--gold); }
+.tour-heading h2 { font-size:clamp(23px,2.4vw,32px); line-height:1.25; margin:14px 0 0; }
+.tour-heading em { font-style:normal; color:#adbeca; }
+.site-tour { display:block; width:100%; aspect-ratio:8/5; object-fit:contain; background:#081623; border:1px solid #cadde54a; border-radius:4px; }
+.site-tour:fullscreen { width:100%; height:100%; object-fit:contain; background:#081623; }
+.tour-controls { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px 0 0; }
+.tour-controls button { font:inherit; font-size:12px; color:#ead4a7; background:transparent; border:1px solid #d9bc8055; border-radius:4px; padding:10px 14px; cursor:pointer; }
+.tour-controls button:focus-visible { outline:2px solid #d9bc80; outline-offset:4px; }
+.tour-controls span { font-size:8px; letter-spacing:.12em; color:#c1cdd5; }
+.tour-description { color:#aebfcb; font-size:11px; line-height:1.6; margin:15px 0 0; }
+@media(max-width:899px) {
+  .glass-document.tour-card { transform:none; width:min(100%,560px); }
+  .tour-scene { padding:24px 0 75px; min-height:0; }
+}
+@media(max-width:480px) {
+  .glass-document.tour-card { padding:18px; }
+  .tour-controls span { font-size:7px; letter-spacing:.06em; }
+}
