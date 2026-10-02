@@ -164,3 +164,25 @@
     document.querySelector(".notice").after(sources);
   }
 })();
+
+// Shared motion preference across the homepage and every supporting page.
+(() => {
+  let paused = false;
+  try { paused = sessionStorage.getItem('hbs-motion') === 'paused'; } catch {}
+  const control = document.createElement('button');
+  control.type = 'button';
+  control.className = 'support-motion-toggle';
+  const update = () => {
+    document.documentElement.dataset.motion = paused ? 'paused' : 'active';
+    control.textContent = paused ? 'Resume motion' : 'Pause motion';
+    control.setAttribute('aria-pressed', String(paused));
+  };
+  control.addEventListener('click', () => {
+    paused = !paused;
+    try { sessionStorage.setItem('hbs-motion', paused ? 'paused' : 'active'); } catch {}
+    update();
+  });
+  update();
+  const footer = document.querySelector('footer .wrap') || document.querySelector('footer');
+  if (footer) footer.append(control);
+})();

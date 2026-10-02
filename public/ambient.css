@@ -1,0 +1,50 @@
+/* A shared, viewport-sized atmosphere remains visible through every section.
+   Pointer-transparent layers never interfere with forms, navigation or HB. */
+body::before, body::after {
+  content: "";
+  position: fixed;
+  inset: -14%;
+  pointer-events: none;
+  z-index: 4;
+  contain: strict;
+}
+body::before {
+  background: radial-gradient(ellipse at 12% 32%, #92bcd938, transparent 42%),
+    radial-gradient(ellipse at 88% 72%, #d7af6b30, transparent 40%),
+    linear-gradient(115deg, transparent 36%, #cadde519 48%, transparent 62%);
+  mix-blend-mode: screen;
+  animation: hairouna-light 18s ease-in-out infinite alternate;
+}
+body::after {
+  background-image: radial-gradient(circle, #e5cc8caa 0 1px, transparent 2px),
+    radial-gradient(circle, #c5deeb80 0 1px, transparent 2px),
+    radial-gradient(circle, #dec08c70 0 1px, transparent 2px);
+  background-size: 233px 271px, 347px 319px, 419px 383px;
+  background-position: 0 0, 120px 70px, 40px 210px;
+  opacity: .42;
+  animation: hairouna-dust 24s linear infinite alternate;
+}
+@keyframes hairouna-light {
+  0% { transform: translate3d(-5%, -3%, 0) rotate(-7deg); opacity: .55; }
+  100% { transform: translate3d(6%, 4%, 0) rotate(7deg); opacity: 1; }
+}
+@keyframes hairouna-dust {
+  from { transform: translate3d(0, 3%, 0); }
+  to { transform: translate3d(3%, -7%, 0); }
+}
+html[data-motion="paused"] *, html[data-motion="paused"] *::before,
+html[data-motion="paused"] *::after { animation-play-state: paused !important; }
+.support-motion-toggle {
+  font: inherit; color: #e9d3a5; background: #112637; border: 1px solid #d9bc8060;
+  padding: 10px 18px; margin: 18px 0; border-radius: 4px; cursor: pointer;
+}
+.support-motion-toggle:focus-visible { outline: 2px solid #d9bc80; outline-offset: 4px; }
+@media(max-width:700px) {
+  body::after { background-size: 173px 251px, 287px 309px, 379px 353px; opacity: .3; }
+}
+@media(prefers-reduced-motion:reduce) {
+  body::before, body::after { animation: none !important; }
+  body::before { opacity: .3; }
+  body::after { display:none; }
+}
+@media print { body::before, body::after, .support-motion-toggle { display:none !important; } }
