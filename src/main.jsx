@@ -228,6 +228,163 @@ function GlassDocument() {
     </div>
   );
 }
+
+function ClarityScene({ paused }) {
+  const scene = React.useRef(null);
+  React.useEffect(() => {
+    const node = scene.current;
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const wide = window.matchMedia("(min-width: 900px)");
+    let frame = 0,
+      active = false;
+    const render = () => {
+      frame = 0;
+      if (paused || motion.matches || !wide.matches) {
+        node.style.setProperty("--assembly", "1");
+        return;
+      }
+      const rect = node.getBoundingClientRect();
+      const distance = Math.max(1, rect.height - window.innerHeight);
+      const progress = Math.min(1, Math.max(0, -rect.top / distance));
+      node.style.setProperty("--assembly", progress.toFixed(3));
+    };
+    const schedule = () => {
+      if (!frame && active) frame = requestAnimationFrame(render);
+    };
+    const reset = () => {
+      render();
+    };
+    const observer =
+      "IntersectionObserver" in window
+        ? new IntersectionObserver((entries) => {
+            active = entries[0].isIntersecting;
+            if (active) schedule();
+          })
+        : null;
+    if (observer) observer.observe(node);
+    else {
+      active = true;
+      render();
+    }
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", reset);
+    motion.addEventListener("change", reset);
+    wide.addEventListener("change", reset);
+    render();
+    return () => {
+      observer?.disconnect();
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", reset);
+      motion.removeEventListener("change", reset);
+      wide.removeEventListener("change", reset);
+    };
+  }, [paused]);
+  return (
+    <section
+      className="clarity-scene"
+      id="about"
+      ref={scene}
+      aria-labelledby="clarity-title"
+    >
+      <div className="clarity-frame">
+        <div className="clarity-copy">
+          <div className="kicker">03 / THE HAIROUNA APPROACH</div>
+          <h2 id="clarity-title">
+            From paperwork.
+            <br />
+            <em>To a clearer picture.</em>
+          </h2>
+          <p className="lead">
+            Good financial support brings the details together — so you can see
+            your next step.
+          </p>
+          <ol className="clarity-steps">
+            <li>
+              <span>01</span>
+              <div>
+                <h3>Start with your situation.</h3>
+                <p>Tell us what you need. Plain language is welcome.</p>
+              </div>
+            </li>
+            <li>
+              <span>02</span>
+              <div>
+                <h3>Make a plan together.</h3>
+                <p>Understand the service, scope and information needed.</p>
+              </div>
+            </li>
+            <li>
+              <span>03</span>
+              <div>
+                <h3>Move forward, organized.</h3>
+                <p>Keep your filings, payroll and records in view.</p>
+              </div>
+            </li>
+          </ol>
+          <a className="secondary" href="/about.html">
+            Meet Hairouna <ChevronRight size={16} />
+          </a>
+        </div>
+        <div className="folio-stage" aria-hidden="true">
+          <div className="folio-light" />
+          <div className="folio-rail" />
+          <div className="folio-sheet folio-back">
+            <span>01 / YOUR RECORDS</span>
+            <b>The details.</b>
+            <div className="folio-lines">
+              <i />
+              <i />
+              <i />
+              <i />
+            </div>
+            <small>INCOME · RECEIPTS · RECORDS</small>
+          </div>
+          <div className="folio-sheet folio-middle">
+            <span>02 / YOUR PLAN</span>
+            <b>The perspective.</b>
+            <div className="folio-chart">
+              <i />
+              <i />
+              <i />
+              <i />
+              <i />
+            </div>
+            <small>ORGANIZE · UNDERSTAND · PREPARE</small>
+          </div>
+          <div className="folio-sheet folio-front">
+            <div className="folio-brand">
+              H
+              <span>
+                HAIROUNA
+                <br />
+                <small>BUSINESS SOLUTIONS</small>
+              </span>
+            </div>
+            <span>03 / YOUR NEXT CHAPTER</span>
+            <b>
+              A clearer
+              <br />
+              <em>way forward.</em>
+            </b>
+            <div className="folio-seal">
+              <Check size={18} />
+              <span>Prepared with care.</span>
+            </div>
+            <small>BUILT AROUND YOU.</small>
+          </div>
+          <div className="folio-caption">
+            INDIVIDUAL DETAILS. ONE CLEARER PICTURE.
+          </div>
+        </div>
+        <span className="scene-edge" aria-hidden="true">
+          HAIROUNA / CLARITY IN EVERY DETAIL
+        </span>
+      </div>
+    </section>
+  );
+}
+
 function App() {
   const [intro, setIntro] = React.useState(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
@@ -265,9 +422,7 @@ function App() {
     )
       return () => preference.removeEventListener("change", onChange);
     const items = [
-      ...document.querySelectorAll(
-        ".section > h2, .section > .kicker, .glass-card, .audience-card, .why-stack > div, .folder, .faq-heading, .contact-panel",
-      ),
+      ...document.querySelectorAll(".audience-row, .folder, .faq-heading"),
     ];
     const observer = new IntersectionObserver(
       (entries) =>
@@ -340,6 +495,11 @@ function App() {
         </header>
         <section className="hero" id="top">
           <div className="hero-grain" />
+          <div className="atelier-horizon" aria-hidden="true">
+            <i />
+            <i />
+            <i />
+          </div>
           <div className="hero-glow" />
           <div className="hero-copy">
             <div className="eyebrow">
@@ -386,7 +546,7 @@ function App() {
           </div>
         </section>
         <section className="section intro" id="services">
-          <div className="kicker">COMPLETE FINANCIAL SUPPORT</div>
+          <div className="kicker">01 / COMPLETE FINANCIAL SUPPORT</div>
           <h2>
             One place for the financial work
             <br />
@@ -399,6 +559,9 @@ function App() {
           <div className="service-grid">
             {services.map(([t, d, I], i) => (
               <article className="glass-card" key={t}>
+                <div className="service-number">
+                  {String(i + 1).padStart(2, "0")}
+                </div>
                 <div className="icon">
                   <I />
                 </div>
@@ -419,14 +582,16 @@ function App() {
                     ][i]
                   }
                 >
-                  Explore service <ChevronRight size={16} />
+                  <span className="sr-only">Explore {t}</span>
+                  <span aria-hidden="true">Explore service</span>{" "}
+                  <ChevronRight size={16} />
                 </a>
               </article>
             ))}
           </div>
         </section>
         <section className="section audience" id="clients">
-          <div className="kicker">BUILT AROUND REAL CLIENTS</div>
+          <div className="kicker">02 / BUILT AROUND REAL CLIENTS</div>
           <h2>
             Your situation isn’t generic.
             <br />
@@ -443,46 +608,7 @@ function App() {
             ))}
           </div>
         </section>
-        <section className="section why" id="about">
-          <div>
-            <div className="kicker">WHY HAIROUNA</div>
-            <h2>
-              Less financial noise.
-              <br />
-              More forward motion.
-            </h2>
-            <p className="lead">
-              Financial work should be easier to understand, organize and act
-              on.
-            </p>
-          </div>
-          <div className="why-stack">
-            <div>
-              <b>01</b>
-              <h3>Start with your situation</h3>
-              <p>
-                Tell us what you need without having to know the accounting
-                terminology.
-              </p>
-            </div>
-            <div>
-              <b>02</b>
-              <h3>Get a clear path</h3>
-              <p>
-                Identify the relevant service and information needed to move
-                forward.
-              </p>
-            </div>
-            <div>
-              <b>03</b>
-              <h3>Stay organized</h3>
-              <p>
-                Keep filings, payroll and financial records visible and
-                manageable.
-              </p>
-            </div>
-          </div>
-        </section>
+        <ClarityScene paused={paused || intro} />
         <section className="section checklist">
           <div className="folder">
             <span>THE HAIROUNA FIELD GUIDE</span>
@@ -504,7 +630,7 @@ function App() {
             <small>YOUR CANADIAN TAX CHECKLIST ↗</small>
           </div>
           <div>
-            <div className="kicker">PREPARE WITH CONFIDENCE</div>
+            <div className="kicker">04 / PREPARE WITH CONFIDENCE</div>
             <h2>
               Know what to gather
               <br />
@@ -545,7 +671,7 @@ function App() {
         <section className="section contact" id="contact">
           <div className="contact-panel">
             <div>
-              <div className="kicker">READY WHEN YOU ARE</div>
+              <div className="kicker">05 / READY WHEN YOU ARE</div>
               <h2>Let’s make the next step clear.</h2>
               <p>
                 Book a free, no-pressure consultation and tell Hairouna what you
