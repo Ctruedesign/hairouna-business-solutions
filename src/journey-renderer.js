@@ -36,6 +36,7 @@ void main(){
 export function installJourney(world, canvas, { intro, paused }) {
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
   let disposed = false, frame = 0, last = 0, time = 0;
+  let pointer = null, guideX = null, guideY = null;
   let progress = parseFloat(world.style.getPropertyValue("--journey-progress")) || 0, target = progress;
   const gl = canvas.getContext("webgl", { alpha: false, antialias: false, powerPreference: "low-power" });
   const assets = [];
@@ -50,13 +51,23 @@ export function installJourney(world, canvas, { intro, paused }) {
     const distance = Math.max(1, main.offsetHeight - innerHeight);
     target = Math.min(1, Math.max(0, scrollY / distance));
   };
-  const positionButterfly = (p, t) => {
+  const positionButterfly = (p, t, dt, moving) => {
     // An irregular route follows the river, with modest banking and depth changes.
-    const x = 70 - 20 * Math.sin(p * Math.PI * 1.5) + Math.sin(t * .42) * 3;
-    const y = 69 - p * 38 + Math.cos(t * .31) * 2;
+    const routeX = 70 - 20 * Math.sin(p * Math.PI * 1.5) + Math.sin(t * .42) * 3;
+    const routeY = 69 - p * 38 + Math.cos(t * .31) * 2;
+    const aimX = pointer ? pointer.x + Math.sin(t * 1.4) * 1.2 : routeX;
+    const aimY = pointer ? pointer.y + Math.cos(t * 1.1) * .8 : routeY;
+    if (guideX === null || !moving) { guideX ??= routeX; guideY ??= routeY; }
+    else {
+      const follow = 1 - Math.exp(-dt / 430);
+      guideX += (aimX - guideX) * follow;
+      guideY += (aimY - guideY) * follow;
+    }
+    const x = guideX, y = guideY;
     world.style.setProperty("--guide-x", `${x.toFixed(2)}vw`);
     world.style.setProperty("--guide-y", `${y.toFixed(2)}vh`);
-    world.style.setProperty("--guide-bank", `${(Math.sin(p * 7 + t * .3) * 16).toFixed(2)}deg`);
+    const bank = pointer ? Math.max(-24, Math.min(24, (aimX - x) * 2)) : Math.sin(p * 7 + t * .3) * 16;
+    world.style.setProperty("--guide-bank", `${bank.toFixed(2)}deg`);
     world.style.setProperty("--guide-scale", (.68 + Math.sin(p * Math.PI) * .42).toFixed(3));
     world.style.setProperty("--journey-progress", p.toFixed(4));
     // Keep the scroll story available when WebGL is unavailable.
@@ -76,7 +87,7 @@ export function installJourney(world, canvas, { intro, paused }) {
     else if (intro) progress = 0;
     else if (world.dataset.sceneProgress !== undefined) progress = target;
     else if (reduced.matches) progress = 0;
-    positionButterfly(progress, time);
+    positionButterfly(progress, time, dt, moving);
     if (gl && program) {
       gl.uniform2f(uniforms.viewport, canvas.width, canvas.height);
       gl.uniform1f(uniforms.progress, progress);
@@ -95,6 +106,15 @@ export function installJourney(world, canvas, { intro, paused }) {
     sample(); schedule();
   };
   const scroll = () => { sample(); schedule(); };
+  const followPointer = event => {
+    if (!allowed() || event.pointerType === 'touch') return;
+    pointer = {
+      x: Math.max(3, Math.min(92, (event.clientX - 24) / innerWidth * 100)),
+      y: Math.max(5, Math.min(90, (event.clientY - 22) / innerHeight * 100)),
+    };
+    schedule();
+  };
+  const leavePointer = event => { if (event.relatedTarget == null && allowed()) pointer = null; };
   const visibility = () => { cancelAnimationFrame(frame); frame = 0; last = 0; schedule(); };
   const shader = (type, source) => {
     const s = gl.createShader(type); gl.shaderSource(s, source); gl.compileShader(s);
@@ -130,6 +150,8 @@ export function installJourney(world, canvas, { intro, paused }) {
   }
   window.addEventListener("scroll", scroll, { passive: true });
   window.addEventListener("hairouna:scene", scroll);
+  window.addEventListener("pointermove", followPointer, {passive:true});
+  window.addEventListener("pointerout", leavePointer, {passive:true});
   window.addEventListener("resize", resize);
   document.addEventListener("visibilitychange", visibility);
   reduced.addEventListener("change", schedule);
@@ -138,6 +160,7 @@ export function installJourney(world, canvas, { intro, paused }) {
     disposed = true; cancelAnimationFrame(frame);
     window.removeEventListener("scroll", scroll); window.removeEventListener("resize", resize);
     window.removeEventListener("hairouna:scene", scroll);
+    window.removeEventListener("pointermove", followPointer); window.removeEventListener("pointerout", leavePointer);
     document.removeEventListener("visibilitychange", visibility); reduced.removeEventListener("change", schedule);
     if (gl) { assets.forEach(texture => gl.deleteTexture(texture)); if (buffer) gl.deleteBuffer(buffer); if (program) gl.deleteProgram(program); }
   };
