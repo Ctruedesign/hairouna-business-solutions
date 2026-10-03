@@ -2203,3 +2203,52 @@ html[data-motion="paused"] .clarity-frame {
   .glass-document.tour-card { padding:18px; }
   .tour-controls span { font-size:7px; letter-spacing:.06em; }
 }
+
+/* Chromatic atelier: richer chapters, dimensional materials, unchanged intro. */
+.cinema-ready .hero {
+  background:radial-gradient(ellipse at 94% 19%,#553195 0,transparent 48%),radial-gradient(ellipse at 55% 95%,#006f76 0,transparent 55%),#071528;
+}
+.cinema-ready .hero h1 em { color:#5de6c8; }
+.cinema-ready .hero-glow { background:radial-gradient(ellipse,#6471ff35,transparent 65%); }
+.cinema-ready .primary { background:linear-gradient(110deg,#67efd1,#39c5d9); color:#072b36; border-color:#67efd1; box-shadow:0 8px 30px #00b9b51a; }
+.cinema-ready .primary:hover { background:linear-gradient(110deg,#92ffe1,#65dded); }
+.cinema-ready .atelier-horizon { transform:translate3d(calc(var(--camera-x,0) * -9px),calc(var(--camera-y,0) * -5px),0); }
+.cinema-ready .atelier-horizon::before { background:linear-gradient(155deg,#7582ed30,transparent 65%); }
+.cinema-ready .tour-card {
+  background:radial-gradient(circle at var(--near-x,75%) var(--near-y,20%),#7764b944,transparent 55%),linear-gradient(145deg,#183e54f0,#14213dee 55%,#342858ef);
+  border-color:#8aa6dc9c; box-shadow:inset 0 1px 0 #d6edff70,18px 38px 85px #020716a6,-12px 0 50px #13c9a818;
+  transform:rotateY(calc(-3deg + var(--camera-x,0) * 1.5deg)) rotateX(calc(var(--camera-y,0) * -1deg));
+}
+.cinema-ready .tour-heading em { color:#8ee6df; }
+.cinema-ready .doc-rule { background:linear-gradient(90deg,#67e7d5,#9496ff,#e5ab79); }
+.cinema-ready .tour-controls button { color:#95f2e1; border-color:#51d4c26b; }
+.cinema-ready #services { background:radial-gradient(ellipse at 100% 50%,#1d2459,transparent 65%),#091725; }
+.glass-card:nth-child(4n+1) { --service-color:#5fe8cc; }
+.glass-card:nth-child(4n+2) { --service-color:#aa9cff; }
+.glass-card:nth-child(4n+3) { --service-color:#79baff; }
+.glass-card:nth-child(4n) { --service-color:#ffaa88; }
+.cinema-ready .glass-card { border-top-color:color-mix(in srgb,var(--service-color) 45%,transparent); padding-left:12px; padding-right:12px; }
+.cinema-ready .glass-card:hover, .cinema-ready .glass-card:focus-within { background:radial-gradient(circle at var(--near-x,50%) var(--near-y,50%),color-mix(in srgb,var(--service-color) 12%,transparent),transparent 75%); border-color:var(--service-color); }
+.cinema-ready .glass-card .icon, .cinema-ready .service-number { color:var(--service-color); }
+.cinema-ready .audience { background:radial-gradient(ellipse at 12% 0,#075e65,transparent 65%),#081f2e; color:#f1f5fa; }
+.cinema-ready .audience .kicker { color:#72e8d5; }
+.cinema-ready .audience h2 em { color:#82d8ff; }
+.cinema-ready .audience-card { border-bottom:2px solid #55dfc7; }
+.cinema-ready .audience-card:nth-child(3n+2) { border-color:#a392ff; }
+.cinema-ready .audience-card:nth-child(3n) { border-color:#ffab87; }
+.cinema-ready .audience-card img { filter:saturate(1.12); }
+.cinema-ready .clarity-scene { background:#11142d; }
+.cinema-ready .clarity-frame { background:radial-gradient(ellipse at 85% 40%,#452d6b70,transparent 60%),radial-gradient(ellipse at 10% 90%,#07494760,transparent 60%); }
+.cinema-ready .clarity-copy h2 em { color:#b8a7ff; }
+.cinema-ready .folio-back { background:linear-gradient(130deg,#137e84,#073249); border-color:#6bdbc6; }
+.cinema-ready .folio-middle { background:linear-gradient(130deg,#544997,#232653); border-color:#a895ed; }
+.cinema-ready .folio-front { background:linear-gradient(145deg,#d5fcf0,#a5dce3 70%,#c3bdf0); }
+.cinema-ready .checklist { background:radial-gradient(ellipse at 15% 55%,#164d634f,transparent 60%),#0b1d2b; }
+.cinema-ready .folder { background:linear-gradient(135deg,#243668,#134754); border-color:#73d6e58c; box-shadow:15px 30px 65px #0005; }
+.cinema-ready .contact { background:radial-gradient(ellipse at 85% 0,#3a235c,transparent 60%),#0c2131; }
+.cinema-ready .contact-panel { border-top-color:#927cce; }
+.cinema-ready .hb { background:linear-gradient(135deg,#175a70,#62488f); border-color:#a3e7da; color:#eefffb; }
+@media(max-width:899px) { .cinema-ready .tour-card { transform:none; } }
+@media(prefers-reduced-motion:reduce) {
+  .cinema-ready .tour-card,.cinema-ready .atelier-horizon { transform:none; }
+}
