@@ -1,0 +1,52 @@
+/* Photographic scenery continues through the site, separate from BrandIntro. */
+main.cinema-ready{position:relative;isolation:isolate;}
+.journey-world{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;opacity:1;transition:opacity 1.4s ease;--guide-x:70vw;--guide-y:69vh;--guide-bank:0deg;--guide-scale:.68;}
+.journey-hidden{opacity:0;visibility:hidden;}
+.journey-still,.journey-canvas,.journey-shade{position:absolute;inset:0;width:100%;height:100%;}
+.journey-still{background:#071322 url('/journey/arrival.webp') center/cover no-repeat;}
+.journey-canvas{opacity:0;transition:opacity 1s;}
+.journey-world[data-rendered="true"] .journey-canvas{opacity:1;}
+.journey-shade{background:linear-gradient(90deg,#02091299,transparent 70%),linear-gradient(0deg,#02091233,transparent 40%);}
+.journey-mist{position:absolute;left:-20%;right:-20%;bottom:18%;height:19%;background:radial-gradient(ellipse,#c9dcf615,transparent 65%);filter:blur(25px);animation:river-mist 24s ease-in-out infinite alternate;}
+@keyframes river-mist{from{transform:translate3d(-3%,0,0)}to{transform:translate3d(4%,-18px,0)}}
+.journey-butterfly{position:absolute;top:0;left:0;width:68px;height:46px;transform:translate3d(var(--guide-x),var(--guide-y),0) rotate(var(--guide-bank)) scale(var(--guide-scale));perspective:180px;filter:brightness(.78) drop-shadow(0 3px 3px #0006);will-change:transform;}
+.natural-wing{position:absolute;inset:0;background:url('/journey/butterfly.webp') center/contain no-repeat;transform-origin:50% 50%;backface-visibility:visible;}
+.natural-left{clip-path:inset(0 50% 0 0);animation:natural-wing-left .23s ease-in-out infinite alternate;}
+.natural-right{clip-path:inset(0 0 0 50%);animation:natural-wing-right .23s ease-in-out infinite alternate;}
+@keyframes natural-wing-left{from{transform:rotateY(8deg)}to{transform:rotateY(69deg)}}
+@keyframes natural-wing-right{from{transform:rotateY(-8deg)}to{transform:rotateY(-69deg)}}
+.cinema-ready > :not(.journey-world){position:relative;z-index:1;}
+.cinema-ready > .nav{z-index:20;background:#05101cbb;backdrop-filter:blur(16px);}
+.cinema-ready .hero{background:transparent;min-height:calc(100svh - 82px);padding-bottom:100px;}
+.cinema-ready .hero-grain,.cinema-ready .hero-glow,.cinema-ready .atelier-horizon{display:none;}
+.cinema-ready .hero-copy{padding:28px;background:linear-gradient(100deg,#04101de6,#04101d88 70%,transparent);border-left:1px solid #e7c98e66;}
+.cinema-ready .hero-copy h1{text-shadow:0 2px 24px #0007;}
+.cinema-ready .hero-copy h1 em{color:#e8cd93;}
+.cinema-ready .hero-copy p,.cinema-ready .trust{color:#d2dce5;}
+.cinema-ready .document-scene{justify-content:flex-end;}
+.cinema-ready .tour-card{width:min(100%,360px);background:#061321b8;border-color:#d3dce44d;backdrop-filter:blur(12px);box-shadow:0 25px 80px #0005;}
+.cinema-ready .document-caption{display:none;}
+.cinema-ready .tour-heading h2{font-size:28px;}
+.cinema-ready .scroll{position:absolute;left:8%;bottom:28px;color:#d3dce4;}
+.cinema-ready .primary{background:linear-gradient(110deg,#dbc086,#eee0b9);border-color:#dcc48f;color:#0a1720;}
+.cinema-ready .primary:hover{background:#f5e9cc;}
+.journey-window{height:42svh;pointer-events:none;}
+.cinema-ready #services,.cinema-ready .audience,.cinema-ready .checklist,.cinema-ready .faq-section,.cinema-ready .contact{background:linear-gradient(90deg,#04101eea,#061321c7);margin-inline:6%;padding:64px 4%;border:1px solid #d3dce421;backdrop-filter:blur(8px);box-shadow:0 22px 90px #0003;}
+.cinema-ready .section h2,.cinema-ready .clarity-copy h2{text-shadow:0 3px 20px #0006;}
+.cinema-ready .section .lead,.cinema-ready .glass-card p{color:#c3ced9;}
+.cinema-ready .clarity-scene{background:transparent;margin-inline:6%;}
+.cinema-ready .clarity-frame{background:linear-gradient(90deg,#061321ed,#0613219c);border:1px solid #d3dce421;backdrop-filter:blur(8px);}
+.cinema-ready footer{margin-top:40svh;background:#04101edb;backdrop-filter:blur(12px);}
+body:has(.cinema-ready .journey-world)::before,body:has(.cinema-ready .journey-world)::after{display:none;}
+@media(max-width:899px){
+  .cinema-ready .hero{padding:55px 6% 85px;}
+  .cinema-ready .hero-copy{padding:24px 20px;}
+  .cinema-ready .document-scene{min-height:0;justify-content:center;}
+  .cinema-ready .tour-card{width:100%;max-width:420px;}
+  .journey-window{height:32svh;}
+  .cinema-ready #services,.cinema-ready .audience,.cinema-ready .checklist,.cinema-ready .faq-section,.cinema-ready .contact{margin-inline:4%;padding:48px 6%;}
+  .journey-butterfly{width:48px;height:32px;}
+}
+@media(prefers-reduced-motion:reduce){.journey-world,.journey-canvas{transition:none;}.journey-mist,.natural-wing{animation:none!important;}.journey-window{height:12svh;}.journey-butterfly{will-change:auto;}}
+html[data-motion="paused"] .journey-butterfly{will-change:auto;}
+@media print{.journey-world,.journey-window{display:none!important;}}
