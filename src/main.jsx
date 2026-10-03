@@ -377,6 +377,64 @@ function ClarityScene({ paused }) {
   );
 }
 
+function LivingLandscape({ paused, intro = false, chapter = false }) {
+  const landscape = React.useRef(null);
+  React.useEffect(() => {
+    const node = landscape.current;
+    const section = node.parentElement;
+    let visible = false;
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let frame = 0;
+    const render = () => {
+      frame = 0;
+      const rect = section.getBoundingClientRect();
+      const enabled = !paused && !intro && !preference.matches && !document.hidden;
+      const travel = chapter ? (window.innerHeight - rect.top) / (window.innerHeight + rect.height) : -rect.top / rect.height;
+      const progress = enabled ? Math.min(1, Math.max(0, travel)) : 0;
+      node.style.setProperty("--landscape-depth", progress.toFixed(4));
+    };
+    const schedule = () => {
+      if (!frame && visible) frame = requestAnimationFrame(render);
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      node.dataset.visible = visible ? "true" : "false";
+      if (visible) schedule();
+    });
+    observer.observe(section);
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    document.addEventListener("visibilitychange", schedule);
+    preference.addEventListener("change", schedule);
+    render();
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      document.removeEventListener("visibilitychange", schedule);
+      preference.removeEventListener("change", schedule);
+    };
+  }, [paused, intro, chapter]);
+  return (
+    <div ref={landscape} className={`living-landscape${chapter ? " chapter-landscape" : ""}`} aria-hidden="true">
+      <div className="landscape-stars" />
+      <div className="landscape-moon" />
+      <div className="mountain-layer mountain-far" />
+      <div className="mountain-layer mountain-near" />
+      <div className="landscape-mist mist-one" />
+      <div className="landscape-mist mist-two" />
+      <div className="butterfly-depth">
+        <div className="butterfly-flight">
+          <i className="butterfly-wing wing-left" />
+          <i className="butterfly-wing wing-right" />
+          <b />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   React.useEffect(() => installDepth(), []);
   const [intro, setIntro] = React.useState(() => {
@@ -491,19 +549,7 @@ function App() {
         </header>
         <section className="hero" id="top">
           <div className="hero-grain" />
-          <div className="living-landscape" aria-hidden="true">
-            <div className="landscape-stars" />
-            <div className="landscape-moon" />
-            <div className="mountain-layer mountain-far" />
-            <div className="mountain-layer mountain-near" />
-            <div className="landscape-mist mist-one" />
-            <div className="landscape-mist mist-two" />
-            <div className="butterfly-flight">
-              <i className="butterfly-wing wing-left" />
-              <i className="butterfly-wing wing-right" />
-              <b />
-            </div>
-          </div>
+          <LivingLandscape paused={paused} intro={intro} />
           <div className="atelier-horizon" aria-hidden="true">
             <i />
             <i />
@@ -555,6 +601,7 @@ function App() {
           </div>
         </section>
         <section className="section intro" id="services">
+          <LivingLandscape paused={paused} intro={intro} chapter />
           <div className="kicker">01 / COMPLETE FINANCIAL SUPPORT</div>
           <h2>
             One place for the financial work
@@ -600,6 +647,7 @@ function App() {
           </div>
         </section>
         <section className="section audience" id="clients">
+          <LivingLandscape paused={paused} intro={intro} chapter />
           <div className="kicker">02 / BUILT AROUND REAL CLIENTS</div>
           <h2>
             Your situation isn’t generic.
@@ -619,6 +667,7 @@ function App() {
         </section>
         <ClarityScene paused={paused || intro} />
         <section className="section checklist">
+          <LivingLandscape paused={paused} intro={intro} chapter />
           <div className="folder">
             <span>THE HAIROUNA FIELD GUIDE</span>
             <b>
@@ -655,6 +704,7 @@ function App() {
           </div>
         </section>
         <section className="section faq-section" id="faq">
+          <LivingLandscape paused={paused} intro={intro} chapter />
           <div className="faq-heading">
             <div className="kicker">QUESTIONS, MADE SIMPLE</div>
             <h2>Frequently asked questions.</h2>
@@ -678,6 +728,7 @@ function App() {
           </div>
         </section>
         <section className="section contact" id="contact">
+          <LivingLandscape paused={paused} intro={intro} chapter />
           <div className="contact-panel">
             <div>
               <div className="kicker">05 / READY WHEN YOU ARE</div>
