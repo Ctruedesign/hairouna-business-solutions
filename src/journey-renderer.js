@@ -55,6 +55,11 @@ export function installJourney(world, canvas, { intro, paused }) {
     world.style.setProperty("--guide-bank", `${(Math.sin(p * 7 + t * .3) * 16).toFixed(2)}deg`);
     world.style.setProperty("--guide-scale", (.68 + Math.sin(p * Math.PI) * .42).toFixed(3));
     world.style.setProperty("--journey-progress", p.toFixed(4));
+    // Keep the scroll story available when WebGL is unavailable.
+    const blend = Math.min(1, Math.max(0, (p - .015) / .155));
+    world.style.setProperty("--valley-opacity", (blend * blend * (3 - 2 * blend)).toFixed(4));
+    world.style.setProperty("--journey-zoom", (1 + p * .72).toFixed(4));
+    world.style.setProperty("--journey-y", `${(50 + p * 20).toFixed(2)}%`);
   };
   let uniforms;
   const draw = (now = 0) => {
