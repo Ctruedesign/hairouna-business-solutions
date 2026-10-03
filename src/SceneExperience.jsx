@@ -23,7 +23,7 @@ export default function SceneExperience({intro, paused, setPaused, replay, servi
   const transit = React.useRef(null);
   const heading = React.useRef(null);
   const lastMove = React.useRef(-Infinity);
-  const wheel = React.useRef({total:0, time:0});
+  const wheel = React.useRef({total:0, time:-Infinity, locked:false});
   const touch = React.useRef(null);
   const tourClose = React.useRef(null);
   const tourTrigger = React.useRef(null);
@@ -64,13 +64,26 @@ export default function SceneExperience({intro, paused, setPaused, replay, servi
       return !!copy && copy.scrollHeight > copy.clientHeight + 1;
     };
     const onWheel = (event) => {
-      if (event.ctrlKey || inContent(event.target)) return;
-      event.preventDefault();
+      if (event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+      if (event.target instanceof Element && event.target.closest('input, textarea, select, [contenteditable="true"], .assistant-panel')) return;
       const now = performance.now();
       const amount = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? innerHeight : 1);
-      if (now - wheel.current.time > 160 || Math.sign(amount) !== Math.sign(wheel.current.total)) wheel.current.total = 0;
+      if (!amount) return;
+      // Let long copy scroll naturally; a fresh gesture at its edge enters the next view.
+      const copy = event.target instanceof Element ? event.target.closest('.scene-copy') : null;
+      if (copy && copy.scrollHeight > copy.clientHeight + 1 &&
+          (amount > 0 ? copy.scrollTop + copy.clientHeight < copy.scrollHeight - 2 : copy.scrollTop > 2)) {
+        wheel.current = {total:0, time:now, locked:true};
+        return;
+      }
+      event.preventDefault();
+      if (now - wheel.current.time > 200) {wheel.current.total = 0; wheel.current.locked = false;}
       wheel.current.time = now; wheel.current.total += amount;
-      if (Math.abs(wheel.current.total) > 70) {advance(Math.sign(wheel.current.total)); wheel.current.total = 0;}
+      if (wheel.current.locked || now - lastMove.current < 1000) {wheel.current.total = 0; return;}
+      if (Math.abs(wheel.current.total) > 70) {
+        advance(Math.sign(wheel.current.total));
+        wheel.current.total = 0; wheel.current.locked = true;
+      }
     };
     const onKey = (event) => {
       if (event.target instanceof Element && event.target.closest('input, textarea, select, button, a, summary, [contenteditable="true"]')) return;
@@ -143,6 +156,7 @@ export default function SceneExperience({intro, paused, setPaused, replay, servi
         <span aria-live="polite" aria-atomic="true">{String(view+1).padStart(2,'0')} / {String(views.length).padStart(2,'0')} <span className="view-name">{views[view][1]}</span></span>
         <button onClick={() => move(view+1)} disabled={view === views.length-1} aria-label="Next view">Next →</button>
       </nav>
+      <p className="vision-wheel-hint">Scroll to explore · {view === views.length - 1 ? 'Scroll up to return' : 'Down to continue, up to return'}</p>
       <div className="vision-utilities"><button onClick={() => setPaused(!paused)} aria-pressed={paused}>{paused ? 'Resume motion' : 'Pause motion'}</button><button onClick={replay}>Replay intro</button><button ref={tourTrigger} onClick={() => setTour(true)}>Watch tour</button><button onClick={() => setAssistant(true)} aria-expanded={assistant}>Ask HB</button></div>
       <Assistant open={assistant} close={() => setAssistant(false)} />
     </div>

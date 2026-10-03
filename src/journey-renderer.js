@@ -3,7 +3,7 @@ const vertex = `attribute vec2 aPosition; varying vec2 vUV;
 void main(){vUV=aPosition*.5+.5;gl_Position=vec4(aPosition,0.,1.);}`;
 const fragment = `precision mediump float;
 varying vec2 vUV;
-uniform sampler2D uArrival, uValley;
+uniform sampler2D uArrival, uValley, uForest;
 uniform vec2 uViewport;
 uniform float uProgress, uTime, uMotion;
 void main(){
@@ -11,10 +11,15 @@ void main(){
   float aspect=uViewport.x/uViewport.y;
   float imageAspect=1.5;
   vec2 fit=vec2(min(1.,aspect/imageAspect),min(1.,imageAspect/aspect));
-  float zoom=1.+uProgress*.72;
-  vec2 center=mix(vec2(.5,.5),vec2(.52,.7),uProgress);
+  float zoom=1.+uProgress*.24;
+  vec2 center=mix(vec2(.5,.5),vec2(.52,.57),uProgress);
   center=clamp(center,fit/(2.*zoom),1.-fit/(2.*zoom));
   vec2 uv=(screen-.5)*fit/zoom+center;
+  // Continuous, overlapping frequencies have no timeline reset or visible loop seam.
+  float sky=(1.-smoothstep(.42,.53,uv.y))*smoothstep(.045,.15,dot(texture2D(uValley,uv).rgb,vec3(.2126,.7152,.0722)));
+  float moon=1.-smoothstep(.035,.075,length((uv-vec2(.81,.125))*vec2(1.5,1.)));
+  uv.x+=(sin(uv.y*21.+uTime*.071)+.45*sin(uv.x*17.-uTime*.113))*.0018*sky*(1.-moon)*uMotion;
+  uv.y+=sin(uv.x*14.+uTime*.053)*.0009*sky*(1.-moon)*uMotion;
   vec4 base=texture2D(uValley,uv);
   // Water mask follows the narrow distant stream and wider reflective pools.
   float nearWater=smoothstep(.76,.97,uv.y);
@@ -30,12 +35,30 @@ void main(){
   float leaveArrival=smoothstep(.015,.17,uProgress);
   vec3 color=mix(arrival,valley,leaveArrival);
   color+=vec3(.04,.055,.065)*water*(.5+.5*sin(uv.y*190.-uTime*1.6))*uMotion;
+  float forestBlend=smoothstep(.2,.65,uProgress);
+  float forestZoom=1.+max(0.,uProgress-.2)*.36;
+  vec2 forestCenter=vec2(.5+uProgress*.035,.5);
+  forestCenter=clamp(forestCenter,fit/(2.*forestZoom),1.-fit/(2.*forestZoom));
+  vec2 forestUV=(screen-.5)*fit/forestZoom+forestCenter;
+  float forestSky=(1.-smoothstep(.25,.38,forestUV.y))*smoothstep(.15,.32,dot(texture2D(uForest,forestUV).rgb,vec3(.2126,.7152,.0722)));
+  float forestMoon=1.-smoothstep(.025,.06,length((forestUV-vec2(.79,.12))*vec2(1.5,1.)));
+  forestUV.x+=sin(forestUV.y*19.+uTime*.079)*.0014*forestSky*(1.-forestMoon)*uMotion;
+  vec3 forestBase=texture2D(uForest,forestUV).rgb;
+  float forestLight=dot(forestBase,vec3(.2126,.7152,.0722));
+  float forestRiver=smoothstep(.56,.83,forestUV.y)*(1.-smoothstep(.16,.32,abs(forestUV.x-.67)))*smoothstep(.12,.4,forestLight);
+  forestUV.x+=(sin(forestUV.y*210.-uTime*1.9)+.4*sin(forestUV.y*327.+uTime*1.37))*.0018*forestRiver*uMotion;
+  forestUV.y+=sin(forestUV.x*84.+uTime*.83)*.0008*forestRiver*uMotion;
+  vec3 forest=texture2D(uForest,forestUV).rgb;
+  color=mix(color,forest,forestBlend);
+  float haze=exp(-pow((screen.y-(.64+.015*sin(uTime*.067)))*11.,2.));
+  float drift=.5+.5*sin(screen.x*12.+uTime*.083+sin(screen.x*7.-uTime*.137));
+  color+=vec3(.025,.035,.043)*haze*drift*uMotion;
   gl_FragColor=vec4(color,1.);
 }`;
 
 export function installJourney(world, canvas, { intro, paused }) {
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
-  let disposed = false, frame = 0, last = 0, time = 0;
+  let disposed = false, frame = 0, last = 0, time = Number(world.dataset.motionTime) || 0;
   let pointer = null, guideX = null, guideY = null;
   let progress = parseFloat(world.style.getPropertyValue("--journey-progress")) || 0, target = progress;
   const gl = canvas.getContext("webgl", { alpha: false, antialias: false, powerPreference: "low-power" });
@@ -73,8 +96,13 @@ export function installJourney(world, canvas, { intro, paused }) {
     // Keep the scroll story available when WebGL is unavailable.
     const blend = Math.min(1, Math.max(0, (p - .015) / .155));
     world.style.setProperty("--valley-opacity", (blend * blend * (3 - 2 * blend)).toFixed(4));
-    world.style.setProperty("--journey-zoom", (1 + p * .72).toFixed(4));
-    world.style.setProperty("--journey-y", `${(50 + p * 20).toFixed(2)}%`);
+    world.style.setProperty("--journey-zoom", (1 + p * .24).toFixed(4));
+    world.style.setProperty("--journey-y", `${(50 + p * 7).toFixed(2)}%`);
+    const forest = Math.min(1, Math.max(0, (p - .2) / .45));
+    world.style.setProperty("--forest-opacity", (forest * forest * (3 - 2 * forest)).toFixed(4));
+    world.style.setProperty("--forest-zoom", (1 + Math.max(0, p - .2) * .36).toFixed(4));
+    world.style.setProperty("--forest-x", `${(50 + p * 7).toFixed(2)}%`);
+    world.style.setProperty("--forest-edge-zoom", (1 + p * .58).toFixed(4));
   };
   let uniforms;
   const draw = (now = 0) => {
@@ -88,11 +116,12 @@ export function installJourney(world, canvas, { intro, paused }) {
     else if (world.dataset.sceneProgress !== undefined) progress = target;
     else if (reduced.matches) progress = 0;
     positionButterfly(progress, time, dt, moving);
+    world.dataset.motionTime = String(time);
     if (gl && program) {
       gl.uniform2f(uniforms.viewport, canvas.width, canvas.height);
       gl.uniform1f(uniforms.progress, progress);
       gl.uniform1f(uniforms.time, time);
-      gl.uniform1f(uniforms.motion, moving ? 1 : 0);
+      gl.uniform1f(uniforms.motion, reduced.matches || intro ? 0 : 1);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
     }
     if (moving) frame = requestAnimationFrame(draw);
@@ -133,7 +162,7 @@ export function installJourney(world, canvas, { intro, paused }) {
       const attribute = gl.getAttribLocation(program, "aPosition");
       gl.enableVertexAttribArray(attribute); gl.vertexAttribPointer(attribute, 2, gl.FLOAT, false, 0, 0);
       uniforms = Object.fromEntries(["viewport","progress","time","motion"].map(key => [key,gl.getUniformLocation(program,"u"+key[0].toUpperCase()+key.slice(1))]));
-      Promise.all(["arrival", "valley"].map((name, unit) => new Promise((resolve, reject) => {
+      Promise.all(["arrival", "valley", "forest"].map((name, unit) => new Promise((resolve, reject) => {
         const image = new Image(); image.onload = () => {
           if (disposed) { resolve(); return; }
           const texture = gl.createTexture(); assets.push(texture);
@@ -143,7 +172,7 @@ export function installJourney(world, canvas, { intro, paused }) {
           gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
           gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
           gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
-          gl.uniform1i(gl.getUniformLocation(program, name === "arrival" ? "uArrival" : "uValley"), unit); resolve();
+          gl.uniform1i(gl.getUniformLocation(program, 'u' + name[0].toUpperCase() + name.slice(1)), unit); resolve();
         }; image.onerror = reject; image.src = `/journey/${name}.webp`;
       }))).then(() => { if (!disposed) { world.dataset.rendered = "true"; schedule(); } }).catch(() => { canvas.style.display = "none"; });
     } catch { canvas.style.display = "none"; program = null; }

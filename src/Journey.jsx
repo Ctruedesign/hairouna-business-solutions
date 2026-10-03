@@ -14,6 +14,10 @@ export default function Journey({ intro, paused, progress }) {
     <div ref={world} className={`journey-world${intro ? " journey-hidden" : ""}`} aria-hidden="true">
       <div className="journey-still" />
       <canvas ref={canvas} className="journey-canvas" />
+      <div className="journey-forest">
+        <img src="/journey/forest.webp" alt="" onError={event => {event.currentTarget.parentElement.dataset.unavailable = 'true';}} />
+        <div className="journey-forest-edge" />
+      </div>
       <div className="journey-mist" />
       <div className="journey-shade" />
       <div className="journey-butterfly">
