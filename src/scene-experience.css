@@ -52,6 +52,15 @@
 .vision-tour .tour-card{width:100%!important;}
 .vision-tour-close{position:absolute;top:24px;right:6%;color:#e8cd93;border:0;background:none;font:inherit;cursor:pointer;}
 .vision-site .assistant-panel{z-index:45;}
+.cra-intro{font-size:12px;line-height:1.7;color:#c4cfda;margin-bottom:14px;}
+.cra-topics{display:flex;flex-wrap:wrap;gap:6px 14px;}
+.cra-topics button,.cra-notice button{font:inherit;font-size:11px;background:none;border:0;border-bottom:1px solid transparent;padding:6px 0;color:#b5c4d2;cursor:pointer;}
+.cra-topics button[aria-pressed="true"]{border-color:#e8cd93;color:#e8cd93;}
+.cra-status{font-size:10px;line-height:1.6;color:#aebdcb;margin:12px 0;}
+.cra-notice{font-size:12px;line-height:1.7;color:#e8cd93;}.cra-notice button{color:#e8cd93;text-decoration:underline;}
+.cra-headlines a{display:block;border-bottom:1px solid #d3dce42b;padding:12px 0;}
+.cra-headlines time{display:block;color:#b5c4d2;font-size:10px;margin-bottom:6px;}
+.cra-headlines strong{font-weight:500;font-size:13px;line-height:1.65;display:block;}
 @keyframes vision-arrive{from{opacity:0;transform:scale(.86);filter:blur(10px);}to{opacity:1;transform:scale(1);filter:none;}}
 .vision-scene{transform-origin:30% 55%;}
 .vision-departing .vision-scene{animation:vision-depart .32s ease-in both;}

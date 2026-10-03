@@ -2,12 +2,18 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "hairouna-business-solutions",
   "compatibility_date": "2026-09-29",
+  "main": "worker/index.js",
+  "triggers": { "crons": ["0 12 1 * *"] },
+  "durable_objects": { "bindings": [{ "name": "CRA_MONTHLY", "class_name": "CraMonthlyUpdates" }] },
+  "migrations": [{ "tag": "cra-monthly-v1", "new_sqlite_classes": ["CraMonthlyUpdates"] }],
   "previews": {},
   "routes": [
     { "pattern": "hairounaholdingsinc.com/*", "zone_name": "hairounaholdingsinc.com" },
     { "pattern": "www.hairounaholdingsinc.com/*", "zone_name": "hairounaholdingsinc.com" }
   ],
   "assets": {
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"],
     "directory": "./dist",
     "not_found_handling": "single-page-application",
   },
