@@ -2,6 +2,10 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {parseFeed,refreshUpdates,monthlyUpdates,SOURCES} from '../worker/cra-updates.js';
 import worker,{CraMonthlyUpdates} from '../worker/index.js';
+import {updateSnapshot} from '../scripts/update-cra.mjs';
+import {mkdtemp,rm,readFile} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
 
 const now = Date.parse('2026-10-03T12:00:00Z');
 const link = 'https://www.canada.ca/en/revenue-agency/news/newsroom/tax-update.html';
@@ -46,9 +50,21 @@ test('visitors only read the stored monthly snapshot, and unrelated routes keep 
   const actor=new CraMonthlyUpdates({storage:saved,blockConcurrencyWhile:fn=>fn()});
   const response=await actor.fetch(new Request('https://cra.internal/snapshot'));
   assert.deepEqual(await response.json(),payload);
-  const env={ASSETS:{fetch:async()=>new Response('asset')},CRA_MONTHLY:{idFromName:name=>name,get:()=>({fetch:()=>Response.json(payload)})}};
+  const env={ASSETS:{fetch:async request=>new URL(request.url).pathname === '/cra-updates.json' ? Response.json(payload) : new Response('asset')}};
   assert.equal(await (await worker.fetch(new Request('https://hairounaholdingsinc.com/contact.html'),env)).text(),'asset');
   assert.equal((await worker.fetch(new Request('https://hairounaholdingsinc.com/api/cra-updates',{method:'POST'}),env)).status,405);
   const api=await worker.fetch(new Request('https://hairounaholdingsinc.com/api/cra-updates'),env);
   assert.equal(api.headers.get('Content-Type'),'application/json; charset=utf-8');assert.deepEqual(await api.json(),payload);
+});
+
+test('monthly repository job persists its month and skips additional fetches on repeat runs',async()=>{
+  const directory=await mkdtemp(join(tmpdir(),'cra-monthly-job-'));
+  try {
+    const path=join(directory,'snapshot.json');let calls=0;
+    const refresh=async({now})=>{calls++;return {status:'ok',attemptedAt:new Date(now).toISOString(),checkedAt:new Date(now).toISOString(),sources:[],items:[]};};
+    assert.equal((await updateSnapshot(path,{now,refresh})).changed,true);
+    assert.equal((await updateSnapshot(path,{now:now+86400000,refresh})).changed,false);assert.equal(calls,1);
+    assert.equal(JSON.parse(await readFile(path,'utf8')).nextCheckAt,'2026-11-01T12:00:00.000Z');
+    assert.equal((await updateSnapshot(path,{now:Date.parse('2026-11-01T12:00:00Z'),refresh})).changed,true);assert.equal(calls,2);
+  }finally{await rm(directory,{recursive:true,force:true});}
 });

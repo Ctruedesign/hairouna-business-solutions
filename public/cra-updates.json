@@ -1,0 +1,376 @@
+{
+  "checkedAt": "2026-10-03T20:05:50.144Z",
+  "attemptedAt": "2026-10-03T20:05:50.144Z",
+  "status": "ok",
+  "sources": [
+    {
+      "id": "individuals",
+      "label": "Individuals",
+      "checkedAt": "2026-10-03T20:05:50.144Z",
+      "status": "ok"
+    },
+    {
+      "id": "businesses",
+      "label": "Businesses",
+      "checkedAt": "2026-10-03T20:05:50.144Z",
+      "status": "ok"
+    },
+    {
+      "id": "gst-hst",
+      "label": "GST/HST",
+      "checkedAt": "2026-10-03T20:05:50.144Z",
+      "status": "ok"
+    },
+    {
+      "id": "news",
+      "label": "Tax tips & alerts",
+      "checkedAt": "2026-10-03T20:05:50.144Z",
+      "status": "ok"
+    },
+    {
+      "id": "announcements",
+      "label": "CRA announcements",
+      "checkedAt": "2026-10-03T20:05:50.144Z",
+      "status": "ok"
+    }
+  ],
+  "items": [
+    {
+      "title": "Protecting taxpayer information: How the CRA prevents, detects, and addresses fraud",
+      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/protecting-taxpayer-information.html",
+      "publishedAt": "2026-10-01T14:30:00.000Z",
+      "categories": [
+        "news"
+      ]
+    },
+    {
+      "title": "The CRA is enhancing security for online income tax and benefit return filing",
+      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/enhancing-security-online-income-tax-benefit-return-filing.html",
+      "publishedAt": "2026-09-22T14:30:00.000Z",
+      "categories": [
+        "news"
+      ]
+    },
+    {
+      "title": "Greater tax certainty for major investments in Canada",
+      "url": "https://www.canada.ca/en/revenue-agency/news/2026/09/greater-tax-certainty-for-major-investments-in-canada.html",
+      "publishedAt": "2026-09-14T13:00:00.000Z",
+      "categories": [
+        "announcements"
+      ]
+    },
+    {
+      "title": "Individuals - Tax information newsletter, Issue: 2026-09",
+      "url": "https://www.canada.ca/en/revenue-agency/news/e-services/canada-revenue-electronic-mailing-lists/individuals-tax-information-newsletters/individuals-tax-information-newsletter-edition-2026-09.html",
+      "publishedAt": "2026-09-10T15:00:00.000Z",
+      "categories": [
+        "individuals"
+      ]
+    },
+    {
+      "title": "Businesses – Tax information newsletter, Edition 2026-04 – July 28, 2026",
+      "url": "https://www.canada.ca/en/revenue-agency/news/e-services/canada-revenue-electronic-mailing-lists/businesses-tax-information-newsletters/businesses-newsletter-2026-07-28.html",
+      "publishedAt": "2026-07-28T15:15:00.000Z",
+      "categories": [
+        "businesses"
+      ]
+    },
+    {
+      "title": "The Canada Child Benefit payments increasing in 2026-2027: Nearly 81,000 families in New Brunswick benefiting from more generous payments starting this month",
+      "url": "https://www.canada.ca/en/revenue-agency/news/2026/07/the-canada-child-benefit-payments-increasing-in-2026-2027-nearly-81000-families-in-new-brunswick-benefiting-from-more-generous-payments-starting-th.html",
+      "publishedAt": "2026-07-16T21:21:09.000Z",
+      "categories": [
+        "announcements"
+      ]
+    },
+    {
+      "title": "Businesses: Changes are coming to the way you access Business Registration Online",
+      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/businesses-changes-are-coming-way-you-access-business-registration-online.html",
+      "publishedAt": "2026-06-23T14:30:00.000Z",
+      "categories": [
+        "news"
+      ]
+    },
+    {
+      "title": "Can’t pay your tax debt right away? We have options to help you – including the Manage balance service",
+      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/cant-pay-tax-debt-options-help-including-manage-balance-service.html",
+      "publishedAt": "2026-06-18T14:30:00.000Z",
+      "categories": [
+        "news"
+      ]
+    },
+    {
+      "title": "Help speed up your disability tax credit application",
+      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/help-speed-up-your-disability-tax-credit-application.html",
+      "publishedAt": "2026-06-16T14:30:00.000Z",
+      "categories": [
+        "news"
+      ]
+    },
+    {
+      "title": "The Voluntary Disclosures Program: Your second chance to set things right",
+      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/voluntary-disclosures-program-second-chance-set-things-right.html",
+      "publishedAt": "2026-06-15T14:30:00.000Z",
+      "categories": [
+        "news"
+      ]
+    },
+    {
+      "title": "Businesses – Tax information newsletter, Edition 2026-03 – June 11, 2026",
+      "url": "https://www.canada.ca/en/revenue-agency/news/e-services/canada-revenue-electronic-mailing-lists/businesses-tax-information-newsletters/businesses-newsletter-2026-06-11.html",
+      "publishedAt": "2026-06-11T15:15:00.000Z",
+      "categories": [
+        "businesses"
+      ]
+    },
+    {
+      "title": "Self-employed? Make filing easier with these tips from the CRA",
+      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/self-employed-make-filing-easier-with-these-tips-from-the-cra.html",
+      "publishedAt": "2026-06-04T14:30:00.000Z",
+      "categories": [
+        "news"
+      ]
+    },
+    {
+      "title": "Don’t miss out on benefits and credits: Why filing your taxes matters",
+      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/tax-season-over-most-canadians-threats-to-personal-information-are-not.html",
+      "publishedAt": "2026-06-02T14:30:00.000Z",
+      "categories": [
+        "news"
+      ]
+    },
+    {
+      "title": "Businesses – Tax information newsletter, Edition 2026-02 – May 21, 2026",
+      "url": "https://www.canada.ca/en/revenue-agency/news/e-services/canada-revenue-electronic-mailing-lists/businesses-tax-information-newsletters/businesses-newsletter-2026-05-21.html",
+      "publishedAt": "2026-05-21T15:15:00.000Z",
+      "categories": [
+        "businesses"
+      ]
+    },
+    {
+      "title": "Don’t miss out on benefits and credits: Why filing your taxes matters",
+      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/dont-miss-out-benefits-credits-why-filing-your-taxes-matters.html",
+      "publishedAt": "2026-05-20T14:30:00.000Z",
+      "categories": [
+        "news"
+      ]
+    },
+    {
+      "title": "Making changes to your tax return? Here’s what’s new and how to save time",
+      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/making-changes-to-your-tax-return-here-what-new-and-how-to-save-time.html",
+      "publishedAt": "2026-05-12T14:30:00.000Z",
+      "categories": [
+        "news"
+      ]
+    },
+    {
+      "title": "Canadians experience improved service delivery and responsiveness from the CRA this tax season",
+      "url": "https://www.canada.ca/en/revenue-agency/news/2026/05/canadians-experience-improved-service-delivery-and-responsiveness-from-the-cra-this-tax-season.html",
+      "publishedAt": "2026-05-06T20:49:58.000Z",
+      "categories": [
+        "announcements"
+      ]
+    },
+    {
+      "title": "What you need to know about the non-taxability of the Canada Carbon Rebate for Small Businesses",
+      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/what-you-need-know-about-non-taxability-canada-carbon-rebate-for-small-businesses.html",
+      "publishedAt": "2026-04-23T14:30:00.000Z",
+      "categories": [
+        "news"
+      ]
+    },
+    {
+      "title": "Canada Groceries and Essentials Benefit one-time top-up payment to make groceries and other essentials more affordable is coming June 5",
+      "url": "https://www.canada.ca/en/revenue-agency/news/2026/04/canada-groceries-and-essentials-benefit-one-time-top-up-payment-to-make-groceries-and-other-essentials-more-affordable-is-coming-june-5.html",
+      "publishedAt": "2026-04-17T14:00:00.000Z",
+      "categories": [
+        "announcements"
+      ]
+    },
+    {
+      "title": "Innovate with confidence: CRA’s SR&ED Tax Incentive Program launches a new Pre-claim approval process",
+      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/innovate-confidence-cra-sred-tax-incentive-program-pre-claim-approval-process.html",
+      "publishedAt": "2026-04-08T15:30:00.000Z",
+      "categories": [
+        "news"
+      ]
+    },
+    {
+      "title": "Tax filing highlights for First Nations, Inuit, and Métis 2026",
+      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/tax-filing-highlights-first-nations-inuit-metis-2026.html",
+      "publishedAt": "2026-03-24T15:30:00.000Z",
+      "categories": [
+        "news"
+      ]
+    },
+    {
+      "title": "Stay current on changes and updates that might affect your business taxes",
+      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/stay-current-on-changes-updates-might-affect-your-business-taxes.html",
+      "publishedAt": "2026-03-23T15:30:00.000Z",
+      "categories": [
+        "news"
+      ]
+    },
+    {
+      "title": "CRA drop boxes to permanently close after 2026 tax filing season",
+      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/drop-boxes-permanently-close-after-2026-tax-filing-season.html",
+      "publishedAt": "2026-03-19T15:30:00.000Z",
+      "categories": [
+        "news"
+      ]
+    },
+    {
+      "title": "First-time buyers can save more on new homes – the First-time home buyers’ GST/HST rebate is available now!",
+      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/first-time-buyers-can-save-more-on-new-homes-the-first-time-home-buyers-gst-hst-rebate-is-available-now.html",
+      "publishedAt": "2026-03-17T15:30:00.000Z",
+      "categories": [
+        "news"
+      ]
+    },
+    {
+      "title": "Tax tip: Taxes made simple for newcomers to Canada",
+      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/what-you-need-to-know-ai-generated-tax-scams.html",
+      "publishedAt": "2026-03-13T15:30:00.000Z",
+      "categories": [
+        "news"
+      ]
+    },
+    {
+      "title": "Tax tip: Taxes made simple for newcomers to Canada",
+      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/tax-tip-taxes-made-simple-newcomers-canada.html",
+      "publishedAt": "2026-03-10T15:30:00.000Z",
+      "categories": [
+        "news"
+      ]
+    },
+    {
+      "title": "Important updates to the trust reporting requirements for the 2025 taxation year: What you need to know",
+      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/important-updates-trust-reporting-requirements.html",
+      "publishedAt": "2026-03-05T15:30:00.000Z",
+      "categories": [
+        "news"
+      ]
+    },
+    {
+      "title": "Putting the “simple” in tax filing",
+      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/tax-season-starts-february-23-heres-what-you-need-to-start-filing.html",
+      "publishedAt": "2026-03-03T15:30:00.000Z",
+      "categories": [
+        "news"
+      ]
+    },
+    {
+      "title": "The Minister of Finance and National Revenue and the Secretary of State (Canada Revenue Agency and Financial Institutions) mark the launch of the 2026 tax-filing season",
+      "url": "https://www.canada.ca/en/revenue-agency/news/2026/02/the-minister-of-finance-and-national-revenue-and-the-secretary-of-state-canada-revenue-agency-and-financial-institutions-mark-the-launch-of-the-202.html",
+      "publishedAt": "2026-02-23T15:20:13.000Z",
+      "categories": [
+        "announcements"
+      ]
+    },
+    {
+      "title": "Businesses – Tax information newsletter, Edition 2026-01 – February 20, 2026",
+      "url": "https://www.canada.ca/en/revenue-agency/news/e-services/canada-revenue-electronic-mailing-lists/businesses-tax-information-newsletters/businesses-newsletter-2026-02-20.html",
+      "publishedAt": "2026-02-20T15:15:00.000Z",
+      "categories": [
+        "businesses"
+      ]
+    },
+    {
+      "title": "The level of service you can expect from the CRA this tax season",
+      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/level-service-expect-from-cra-this-tax-season.html",
+      "publishedAt": "2026-02-12T15:30:00.000Z",
+      "categories": [
+        "news"
+      ]
+    },
+    {
+      "title": "Update on contact centres for the 2026 tax-filing season: Ensuring Canadians receive the support they need",
+      "url": "https://www.canada.ca/en/revenue-agency/news/2026/02/update-on-contact-centres-for-the-2026-tax-filing-season-ensuring-canadians-receive-the-support-they-need.html",
+      "publishedAt": "2026-02-12T15:00:00.000Z",
+      "categories": [
+        "announcements"
+      ]
+    },
+    {
+      "title": "Getting ready for tax season? Here’s how to give your tax preparer access – faster and more securely",
+      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/getting-ready-for-tax-season.html",
+      "publishedAt": "2026-02-11T14:00:00.000Z",
+      "categories": [
+        "news"
+      ]
+    },
+    {
+      "title": "CRA account users are encouraged to add a backup multi-factor authentication option",
+      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/cra-account-users-encouraged-add-backup-multi-factor-authentication-option",
+      "publishedAt": "2026-02-09T14:00:00.000Z",
+      "categories": [
+        "news"
+      ]
+    },
+    {
+      "title": "Trucking industry: Make sure you’re meeting your reporting obligations",
+      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/trucking-industry-meeting-reporting-obligations.html",
+      "publishedAt": "2026-02-05T14:00:00.000Z",
+      "categories": [
+        "news"
+      ]
+    },
+    {
+      "title": "Secretary of State Long announces renewed funding for tax clinics for the 55th anniversary of the CVITP",
+      "url": "https://www.canada.ca/en/revenue-agency/news/2026/02/secretary-of-state-long-announces-renewed-funding-for-tax-clinics-for-the-55th-anniversary-of-the-cvitp.html",
+      "publishedAt": "2026-02-03T17:00:00.000Z",
+      "categories": [
+        "announcements"
+      ]
+    },
+    {
+      "title": "NEWS121 Excise and GST/HST News - No. 121",
+      "url": "https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/news121.html",
+      "publishedAt": "2026-01-27T05:16:00.000Z",
+      "categories": [
+        "gst-hst"
+      ]
+    },
+    {
+      "title": "CRA responsiveness doubled as the 100-Day Service Improvement Plan reaches completion",
+      "url": "https://www.canada.ca/en/revenue-agency/news/2025/12/cra-responsiveness-doubled-as-the-100-day-service-improvement-plan-reaches-completion.html",
+      "publishedAt": "2025-12-11T10:00:00.000Z",
+      "categories": [
+        "announcements"
+      ]
+    },
+    {
+      "title": "CRA strengthens compliance in trucking sector by lifting the moratorium on T4A penalties",
+      "url": "https://www.canada.ca/en/revenue-agency/news/2025/12/cra-strengthens-compliance-in-trucking-sector-by-lifting-the-moratorium-on-t4a-penalties.html",
+      "publishedAt": "2025-12-04T17:00:00.000Z",
+      "categories": [
+        "announcements"
+      ]
+    },
+    {
+      "title": "Contact centre accuracy and service representatives training",
+      "url": "https://www.canada.ca/en/revenue-agency/news/2025/11/contact-centre-accuracy-and-service-representatives-training.html",
+      "publishedAt": "2025-11-18T20:20:00.000Z",
+      "categories": [
+        "announcements"
+      ]
+    },
+    {
+      "title": "The Minister of Finance and National Revenue and the Secretary of State (Canada Revenue Agency and Financial Institutions) respond to the Auditor General’s report: Canada Revenue Agency - contact centres",
+      "url": "https://www.canada.ca/en/revenue-agency/news/2025/10/the-minister-of-finance-and-national-revenue-and-the-secretary-of-state-canada-revenue-agency-and-financial-institutions-respond-to-the-auditor-gen.html",
+      "publishedAt": "2025-10-21T18:01:00.000Z",
+      "categories": [
+        "announcements"
+      ]
+    },
+    {
+      "title": "Mid-point Update – The CRA’s 100-day Service Improvement Plan",
+      "url": "https://www.canada.ca/en/revenue-agency/news/2025/10/mid-point-update--the-cras-100-day-service-improvement-plan.html",
+      "publishedAt": "2025-10-20T13:20:00.000Z",
+      "categories": [
+        "announcements"
+      ]
+    }
+  ],
+  "nextCheckAt": "2026-11-01T12:00:00.000Z"
+}

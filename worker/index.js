@@ -12,18 +12,17 @@ export class CraMonthlyUpdates {
     });
   }
 }
-const store = env => env.CRA_MONTHLY.get(env.CRA_MONTHLY.idFromName('canadian-cra-monthly-v1'));
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     if(url.pathname !== '/api/cra-updates') return env.ASSETS.fetch(request);
     if(request.method !== 'GET') return new Response('Method not allowed',{status:405,headers:{Allow:'GET'}});
     try {
-      const response = await store(env).fetch('https://cra.internal/snapshot');
+      const response = await env.ASSETS.fetch(new Request(new URL('/cra-updates.json',request.url)));
+      if(!response.ok) throw Error('Saved CRA snapshot unavailable');
       return new Response(response.body,{status:response.status,headers:{'Content-Type':'application/json; charset=utf-8','Cache-Control':'public, max-age=300','X-Content-Type-Options':'nosniff'}});
     } catch {
       return Response.json({status:'unavailable',checkedAt:null,sources:[],items:[]},{status:503,headers:{'Cache-Control':'no-store'}});
     }
   },
-  async scheduled(_event, env) {await store(env).fetch('https://cra.internal/snapshot',{method:'POST'});},
 };
