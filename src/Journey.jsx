@@ -20,6 +20,13 @@ export default function Journey({ intro, paused, progress }) {
         <span className="natural-wing natural-left" />
         <span className="natural-wing natural-right" />
       </div>
+      <div className="grass-butterflies">
+        {[['12%','8%', '-18deg', '.8'], ['88%','12%', '22deg', '.7'], ['24%','3%', '8deg', '1'], ['76%','5%', '-26deg', '.85']].map(([left,bottom,bank,scale],i) => (
+          <div key={left} className={`grass-butterfly grass-butterfly-${i}`} style={{left,bottom,'--rest-bank':bank,'--rest-scale':scale}}>
+            <span className="natural-wing resting-left" /><span className="natural-wing resting-right" />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
