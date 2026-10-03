@@ -7,8 +7,14 @@ main.cinema-ready{position:relative;isolation:isolate;}
 .journey-still::after{content:"";position:absolute;inset:0;background:url('/journey/valley.webp') 50% var(--journey-y,50%)/cover no-repeat;opacity:var(--valley-opacity,0);}
 .journey-canvas{opacity:0;transition:opacity 1s;}
 .journey-world[data-rendered="true"] .journey-canvas{opacity:1;}
+.journey-forest{position:absolute;inset:0;opacity:var(--forest-opacity,0);overflow:hidden;}
+.journey-forest[data-unavailable="true"]{display:none;}
+.journey-world[data-rendered="true"] .journey-forest{visibility:hidden;}
+.journey-forest > img{width:100%;height:100%;object-fit:cover;object-position:var(--forest-x,50%) 50%;transform:scale(var(--forest-zoom,1));transform-origin:60% 48%;}
+.journey-forest-edge{position:absolute;inset:0;background:url('/journey/forest.webp') var(--forest-x,50%) 50%/cover no-repeat;mask-image:linear-gradient(90deg,#000,transparent 18%,transparent 85%,#000);transform:scale(var(--forest-edge-zoom,1));transform-origin:60% 48%;opacity:.55;}
 .journey-shade{background:linear-gradient(90deg,#02091299,transparent 70%),linear-gradient(0deg,#02091233,transparent 40%);}
 .journey-mist{position:absolute;left:-20%;right:-20%;bottom:18%;height:19%;background:radial-gradient(ellipse,#c9dcf615,transparent 65%);filter:blur(25px);animation:river-mist 24s ease-in-out infinite alternate;}
+.journey-mist::after{content:"";position:absolute;inset:-20% 10%;background:radial-gradient(ellipse,#b8d5e914,transparent 60%);animation:river-mist 39s ease-in-out infinite alternate-reverse;}
 @keyframes river-mist{from{transform:translate3d(-3%,0,0)}to{transform:translate3d(4%,-18px,0)}}
 .journey-butterfly{position:absolute;top:0;left:0;width:68px;height:46px;transform:translate3d(var(--guide-x),var(--guide-y),0) rotate(var(--guide-bank)) scale(var(--guide-scale));perspective:180px;filter:brightness(.78) drop-shadow(0 3px 3px #0006);will-change:transform;}
 .natural-wing{position:absolute;inset:0;background:url('/journey/butterfly.webp') center/contain no-repeat;transform-origin:50% 50%;backface-visibility:visible;}
@@ -56,6 +62,7 @@ body:has(.cinema-ready .journey-world)::before,body:has(.cinema-ready .journey-w
   .journey-butterfly{width:48px;height:32px;}
   .grass-butterfly{width:28px;height:19px;}
 }
-@media(prefers-reduced-motion:reduce){.journey-world,.journey-canvas{transition:none;}.journey-mist,.natural-wing{animation:none!important;}.journey-window{height:12svh;}.journey-butterfly{will-change:auto;}}
+@media(prefers-reduced-motion:reduce){.journey-world,.journey-canvas{transition:none;}.journey-mist,.journey-mist::after,.natural-wing{animation:none!important;}.journey-window{height:12svh;}.journey-butterfly{will-change:auto;}}
+html[data-motion="paused"] .journey-mist,html[data-motion="paused"] .journey-mist::after{animation-play-state:paused;}
 html[data-motion="paused"] .journey-butterfly{will-change:auto;}
 @media print{.journey-world,.journey-window{display:none!important;}}

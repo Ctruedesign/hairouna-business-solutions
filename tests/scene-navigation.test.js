@@ -45,6 +45,21 @@ test('scene navigation reaches every destination, keeps forms usable and respect
     await wait(400);assert.equal(w.location.hash,'#services-more');
     const slugs = [...d.querySelectorAll('.vision-service-list a')].map(el => el.hash);
     assert.deepEqual(slugs,['#gst-hst','#statements','#registration','#audit']);
+    // Long copy consumes wheel events until its edge; a new gesture advances there.
+    const copy = d.querySelector('.scene-copy');
+    Object.defineProperties(copy, {scrollHeight:{value:900}, clientHeight:{value:300}});
+    copy.scrollTop = 200;
+    const contentWheel = () => {const event = new w.WheelEvent('wheel',{deltaY:100,bubbles:true,cancelable:true});copy.dispatchEvent(event);return event;};
+    assert.equal(contentWheel().defaultPrevented,false);
+    copy.scrollTop = 600;
+    assert.equal(contentWheel().defaultPrevented,true);
+    await wait(100);assert.equal(w.location.hash,'#services-more');
+    await wait(1000);contentWheel();await wait(400);
+    assert.equal(w.location.hash,'#clients');
+    // A new upward wheel gesture returns to the previous view.
+    await wait(650);
+    d.querySelector('.scene-copy').dispatchEvent(new w.WheelEvent('wheel',{deltaY:-120,bubbles:true,cancelable:true}));
+    await wait(400);assert.equal(w.location.hash,'#services-more');
     // Explicit controls work with ambient motion paused, without animation delays.
     label('Pause motion').click();await wait(30);
     click('[aria-label="Next view"]');await wait(40);
