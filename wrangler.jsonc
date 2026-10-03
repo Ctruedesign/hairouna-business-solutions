@@ -3,7 +3,7 @@
   "name": "hairouna-business-solutions",
   "compatibility_date": "2026-09-29",
   "main": "worker/index.js",
-  "triggers": { "crons": ["0 12 1 * *"] },
+  "triggers": { "crons": [] },
   "durable_objects": { "bindings": [{ "name": "CRA_MONTHLY", "class_name": "CraMonthlyUpdates" }] },
   "migrations": [{ "tag": "cra-monthly-v1", "new_sqlite_classes": ["CraMonthlyUpdates"] }],
   "previews": {},
