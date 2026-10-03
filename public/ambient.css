@@ -9,20 +9,28 @@ body::before, body::after {
   contain: strict;
 }
 body::before {
-  background: radial-gradient(ellipse at 12% 32%, #92bcd938, transparent 42%),
-    radial-gradient(ellipse at 88% 72%, #d7af6b30, transparent 40%),
-    linear-gradient(115deg, transparent 36%, #cadde519 48%, transparent 62%);
+  background: radial-gradient(ellipse at 12% 32%, #00bea93d, transparent 43%),
+    radial-gradient(ellipse at 85% 65%, #8054ee35, transparent 44%),
+    conic-gradient(from 210deg at 74% 8%, transparent 0deg, #3d91ff24 16deg, transparent 36deg, transparent 360deg);
   mix-blend-mode: screen;
-  animation: hairouna-light 18s ease-in-out infinite alternate;
+  translate: calc(var(--camera-x, 0) * 12px) calc(var(--camera-y, 0) * 8px);
+  animation: hairouna-light 22s ease-in-out infinite alternate;
 }
 body::after {
-  background-image: radial-gradient(circle, #e5cc8caa 0 1px, transparent 2px),
-    radial-gradient(circle, #c5deeb80 0 1px, transparent 2px),
-    radial-gradient(circle, #dec08c70 0 1px, transparent 2px);
-  background-size: 233px 271px, 347px 319px, 419px 383px;
-  background-position: 0 0, 120px 70px, 40px 210px;
-  opacity: .42;
-  animation: hairouna-dust 24s linear infinite alternate;
+  background-image:
+    radial-gradient(circle at 7% 19%, #69e4ce90 0 1px, transparent 2px),
+    radial-gradient(circle at 23% 71%, #dab0ff90 0 1.5px, transparent 3px),
+    radial-gradient(circle at 41% 12%, #ffb38580 0 1px, transparent 2px),
+    radial-gradient(circle at 68% 86%, #8caaff90 0 1px, transparent 2px),
+    radial-gradient(circle at 89% 37%, #59eac080 0 1.5px, transparent 3px),
+    radial-gradient(circle at 72% 28%, #ede6c880 0 1px, transparent 2px),
+    radial-gradient(circle at 13% 89%, #98bbdf70 0 1px, transparent 2px),
+    radial-gradient(circle at 56% 64%, #97d5d880 0 1px, transparent 2px),
+    radial-gradient(circle at 95% 77%, #dfafff90 0 1.5px, transparent 3px),
+    radial-gradient(circle at 34% 43%, #dfc68780 0 1px, transparent 2px);
+  opacity: .6;
+  translate: calc(var(--camera-x, 0) * -18px) calc(var(--camera-y, 0) * -12px);
+  animation: hairouna-dust 32s ease-in-out infinite alternate;
 }
 @keyframes hairouna-light {
   0% { transform: translate3d(-5%, -3%, 0) rotate(-7deg); opacity: .55; }
@@ -40,7 +48,7 @@ html[data-motion="paused"] *::after { animation-play-state: paused !important; }
 }
 .support-motion-toggle:focus-visible { outline: 2px solid #d9bc80; outline-offset: 4px; }
 @media(max-width:700px) {
-  body::after { background-size: 173px 251px, 287px 309px, 379px 353px; opacity: .3; }
+  body::after { opacity: .4; }
 }
 @media(prefers-reduced-motion:reduce) {
   body::before, body::after { animation: none !important; }

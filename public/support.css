@@ -452,3 +452,20 @@ header:has(#navtoggle:focus-visible) .hamburger {
     display: none !important;
   }
 }
+
+/* Supporting chapters share the richer palette without moving forms or text. */
+.hero { background:radial-gradient(ellipse at 90% 20%,#503280 0,transparent 52%),radial-gradient(ellipse at 30% 110%,#086b6d,transparent 62%),#081a30 !important; }
+.hero::after { border-color:#8d9bf560; box-shadow:0 0 0 55px #9172ed12,0 0 0 110px #4cd4cb0c; translate:calc(var(--camera-x,0)*10px) calc(var(--camera-y,0)*6px); }
+.hero h1 em,.hero h1 span { color:#78e4d2 !important; }
+.svc,.plan,.card { --accent:#65e3c6; }
+.svc:nth-child(4n+2),.plan:nth-child(4n+2),.card:nth-child(4n+2) { --accent:#b2a2ff; }
+.svc:nth-child(4n+3),.plan:nth-child(4n+3),.card:nth-child(4n+3) { --accent:#82bdff; }
+.svc:nth-child(4n),.plan:nth-child(4n),.card:nth-child(4n) { --accent:#ffae8d; }
+.svc,.plan,.card { border-color:color-mix(in srgb,var(--accent) 35%,transparent) !important; background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 8%,#0b1b2a),#0c1c2b) !important; }
+.svc { border-left-color:var(--accent) !important; }
+.svc:hover,.plan:hover { border-color:var(--accent) !important; background:radial-gradient(circle at var(--near-x,50%) var(--near-y,50%),color-mix(in srgb,var(--accent) 15%,#0b1b2a),#0c1c2b) !important; }
+.card .icon,.ci { filter:none; opacity:1; }
+.cta-band { background:linear-gradient(110deg,#073d4755,#442e6755) !important; border-color:#7accc960 !important; }
+.lead-form input:focus,.lead-form textarea:focus,.lead-form select:focus { border-color:#66dfcb !important; box-shadow:0 0 0 3px #66dfcb20; }
+#hbchatBtn { background:linear-gradient(135deg,#175a70,#62488f) !important; border-color:#94dfd3 !important; color:#eefffb !important; }
+@media print { .hero,.svc,.plan,.card,.cta-band { background:white !important; color:black !important; } }

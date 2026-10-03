@@ -186,3 +186,5 @@
   const footer = document.querySelector('footer .wrap') || document.querySelector('footer');
   if (footer) footer.append(control);
 })();
+
+import("/depth.js").then(({ installDepth }) => installDepth()).catch(() => {});
