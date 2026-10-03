@@ -1,0 +1,70 @@
+/* The landscape is the page. Content occupies only one edge of each view. */
+.vision-site{height:100svh;overflow:hidden;position:relative;background:#061321;}
+.vision-site .journey-world{position:absolute;}
+.vision-site > .vision-interface{position:absolute;inset:0;z-index:1;}
+.vision-interface::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#020912e6, #02091288 32%,transparent 66%),linear-gradient(0deg,#020912d9,transparent 24%,transparent 85%,#02091277);}
+.vision-interface.view-0::before{background:linear-gradient(0deg,#020912d9,transparent 45%),linear-gradient(180deg,#02091288,transparent 18%);}
+.vision-header{position:absolute;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:22px 5%;background:transparent;}
+.vision-menu-button,.vision-controls button,.vision-utilities button,.scene-link{border:0;background:none;color:#f1e3be;font:inherit;cursor:pointer;}
+.vision-menu-button{font-size:13px;padding:12px 0 12px 18px;}
+.vision-menu{position:absolute;right:5%;top:76px;width:min(310px,90vw);padding:16px 24px;background:#061321f5;border:1px solid #d9bc8033;display:grid;gap:2px;max-height:65svh;overflow:auto;}
+.vision-menu a{padding:9px 0;font-size:14px;color:#dce5ed;}
+.vision-menu a[aria-current]{color:#e8cd93;}
+.vision-scene{position:absolute;inset:100px 0 115px;display:flex;align-items:center;padding:0 6%;pointer-events:none;animation:vision-arrive .7s ease both;}
+.scene-copy{pointer-events:auto;width:min(460px,42vw);max-height:100%;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#b5a17855 transparent;padding:10px 14px 14px 0;text-shadow:0 2px 15px #0008;}
+.vision-scene h1{font:400 clamp(26px,3vw,42px)/1.15 Manrope,sans-serif;letter-spacing:-.04em;color:#f1f5f8;margin:0 0 24px;outline:none;}
+.vision-kicker{font-size:10px!important;letter-spacing:.14em;text-transform:uppercase;color:#e8cd93!important;margin:0 0 18px!important;}
+.scene-copy > p{font-size:15px;line-height:1.7;color:#d8e0e8;margin:0 0 22px;}
+.vision-arrival{align-items:flex-end;}
+.vision-arrival .scene-copy{width:auto;max-width:460px;overflow:visible;}
+.vision-arrival h1{font-size:clamp(30px,3.3vw,48px);margin-bottom:10px;}
+.vision-arrival .scene-copy > p{font-size:13px;margin-bottom:12px;}
+.scene-link{display:inline-block;padding:10px 0;border-bottom:1px solid #e8cd9377;font-size:14px;color:#f1e3be;}
+.vision-service-list{display:grid;gap:0;}
+.vision-service-list > a{display:block;padding:16px 0;border-bottom:1px solid #d3dce42b;}
+.vision-service-list strong{display:flex;justify-content:space-between;font-size:18px;font-weight:500;color:#f5f7fa;}
+.vision-service-list > a > span{display:block;color:#c4cfda;font-size:13px;margin-top:5px;line-height:1.6;}
+.vision-client-list{display:grid;gap:12px;}
+.vision-client-list a{display:flex;align-items:center;gap:14px;}
+.vision-client-list img{width:48px;height:48px;border-radius:50%;object-fit:cover;flex:none;}
+.vision-client-list strong{display:block;font-weight:500;font-size:15px;}
+.vision-client-list small{display:block;font-size:11px;line-height:1.5;color:#c4cfda;margin-top:3px;}
+.vision-steps{padding-left:22px;display:grid;gap:22px;color:#e8cd93;}
+.vision-steps strong,.vision-steps span{display:block;}
+.vision-steps strong{color:#f1f5f8;font-size:16px;font-weight:500;}
+.vision-steps span{color:#c4cfda;font-size:13px;line-height:1.6;margin-top:6px;}
+.vision-faq > div{border-bottom:1px solid #d3dce42b;}
+.vision-faq button{width:100%;display:flex;justify-content:space-between;gap:16px;text-align:left;border:0;background:none;color:#f1f5f8;padding:14px 0;font:500 14px/1.6 Manrope;cursor:pointer;}
+.vision-faq p{font-size:13px;line-height:1.7;color:#c4cfda;padding:0 0 14px;}
+.vision-contact{display:grid;gap:14px;margin-top:28px;font-size:14px;}
+.vision-legal{display:block;margin-top:28px;font-size:10px;line-height:1.7;color:#afbdcb;}
+.vision-controls{position:absolute;left:6%;right:6%;bottom:48px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #d3dce433;padding-top:12px;font-size:12px;}
+.vision-controls button{padding:10px 0;min-width:64px;text-align:left;}
+.vision-controls button:last-child{text-align:right;}
+.vision-controls button:disabled{opacity:.25;cursor:default;}
+.vision-controls > span{color:#c4cfda;font-size:11px;letter-spacing:.1em;}
+.view-name{margin-left:20px;letter-spacing:0;}
+.vision-utilities{position:absolute;left:6%;right:6%;bottom:12px;display:flex;justify-content:center;gap:20px;}
+.vision-utilities button{font-size:10px;color:#a9bacb;padding:8px 0;}
+.vision-site a:focus-visible,.vision-site button:focus-visible{outline:2px solid #e8cd93;outline-offset:4px;}
+.vision-tour{position:absolute!important;inset:0;z-index:50!important;background:#020912f5;display:grid;place-items:center;padding:70px 6% 30px;overflow:auto;}
+.vision-tour .document-scene{width:min(550px,100%);}
+.vision-tour .tour-card{width:100%!important;}
+.vision-tour-close{position:absolute;top:24px;right:6%;color:#e8cd93;border:0;background:none;font:inherit;cursor:pointer;}
+.vision-site .assistant-panel{z-index:45;}
+@keyframes vision-arrive{from{opacity:0;transform:scale(.86);filter:blur(10px);}to{opacity:1;transform:scale(1);filter:none;}}
+.vision-scene{transform-origin:30% 55%;}
+.vision-departing .vision-scene{animation:vision-depart .32s ease-in both;}
+@keyframes vision-depart{from{opacity:1;transform:scale(1);filter:none;}to{opacity:0;transform:scale(1.2);filter:blur(12px);}}
+@media(max-width:700px){
+ .vision-header{padding:16px 6%;}.vision-header .brand b{font-size:13px;}.vision-header .brand small{font-size:6px;}.vision-header .brand > span{width:34px;height:34px;font-size:24px;}.vision-header .brand{gap:9px;}
+ .vision-menu-button{font-size:11px;}.vision-scene{inset:86px 0 112px;align-items:flex-end;}
+ .scene-copy{width:85%;max-height:64%;padding:12px 10px 10px 0;}
+ .vision-arrival .scene-copy{max-height:none;width:100%;}.vision-arrival .vision-kicker{font-size:8px!important;}
+ .vision-interface::before{background:linear-gradient(0deg,#020912f2,#020912bb 30%,transparent 72%),linear-gradient(180deg,#02091277,transparent 20%);}
+ .vision-scene h1{font-size:27px;margin-bottom:18px;}.vision-service-list > a{padding:12px 0;}.vision-service-list strong{font-size:16px;}.vision-service-list > a > span{font-size:12px;}
+ .scene-copy > p{font-size:13px;}.vision-client-list{gap:10px;}.vision-client-list small{font-size:10px;}.vision-client-list img{width:36px;height:36px;}.vision-client-list strong{font-size:13px;}
+ .view-name{display:none;}.vision-utilities{gap:16px;}.vision-controls{bottom:50px;}
+}
+@media(prefers-reduced-motion:reduce){.vision-scene{animation:none;}}
+html[data-motion="paused"] .vision-scene{animation:none;}

@@ -42,6 +42,10 @@ export function installJourney(world, canvas, { intro, paused }) {
   let program, buffer;
   const allowed = () => !intro && !paused && !reduced.matches && !document.hidden;
   const sample = () => {
+    if (world.dataset.sceneProgress !== undefined) {
+      target = Math.min(1, Math.max(0, Number(world.dataset.sceneProgress) || 0));
+      return;
+    }
     const main = document.querySelector("main");
     const distance = Math.max(1, main.offsetHeight - innerHeight);
     target = Math.min(1, Math.max(0, scrollY / distance));
@@ -69,7 +73,9 @@ export function installJourney(world, canvas, { intro, paused }) {
     const dt = last ? Math.min(50, now - last) : 16;
     last = now;
     if (moving) { time += dt / 1000; progress += (target - progress) * (1 - Math.exp(-dt / 130)); }
-    else if (reduced.matches || intro) progress = 0;
+    else if (intro) progress = 0;
+    else if (world.dataset.sceneProgress !== undefined) progress = target;
+    else if (reduced.matches) progress = 0;
     positionButterfly(progress, time);
     if (gl && program) {
       gl.uniform2f(uniforms.viewport, canvas.width, canvas.height);
@@ -123,6 +129,7 @@ export function installJourney(world, canvas, { intro, paused }) {
     } catch { canvas.style.display = "none"; program = null; }
   }
   window.addEventListener("scroll", scroll, { passive: true });
+  window.addEventListener("hairouna:scene", scroll);
   window.addEventListener("resize", resize);
   document.addEventListener("visibilitychange", visibility);
   reduced.addEventListener("change", schedule);
@@ -130,6 +137,7 @@ export function installJourney(world, canvas, { intro, paused }) {
   return () => {
     disposed = true; cancelAnimationFrame(frame);
     window.removeEventListener("scroll", scroll); window.removeEventListener("resize", resize);
+    window.removeEventListener("hairouna:scene", scroll);
     document.removeEventListener("visibilitychange", visibility); reduced.removeEventListener("change", schedule);
     if (gl) { assets.forEach(texture => gl.deleteTexture(texture)); if (buffer) gl.deleteBuffer(buffer); if (program) gl.deleteProgram(program); }
   };
