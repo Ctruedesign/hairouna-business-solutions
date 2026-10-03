@@ -24,6 +24,7 @@ test('scene navigation reaches every destination, keeps forms usable and respect
     w.HTMLCanvasElement.prototype.getContext = () => null;
     w.HTMLMediaElement.prototype.play = () => Promise.resolve();
     w.HTMLMediaElement.prototype.pause = () => {};
+    w.fetch = async () => Response.json({status:'ok',checkedAt:'2026-10-03T12:00:00Z',sources:[],items:[]});
     w.eval(bundle);
     const wait = ms => new Promise(resolve => setTimeout(resolve,ms));
     const click = selector => {const el = d.querySelector(selector); assert.ok(el,selector);el.click();};
@@ -54,6 +55,9 @@ test('scene navigation reaches every destination, keeps forms usable and respect
     click('[aria-label="Next view"]');await wait(40);assert.equal(w.location.hash,'#faq');
     const questions = [...d.querySelectorAll('.vision-faq button')];questions[2].click();await wait(30);
     assert.equal(questions[2].getAttribute('aria-expanded'),'true');
+    click('[aria-label="Next view"]');await wait(40);assert.equal(w.location.hash,'#updates');
+    assert.ok(d.querySelector('.cra-updates'));
+    assert.ok(d.querySelector('a[href="https://www.canada.ca/en/revenue-agency/news/newsroom.html"]'));
     click('[aria-label="Next view"]');await wait(40);assert.equal(w.location.hash,'#contact');
     assert.equal(d.querySelector('[aria-label="Next view"]').disabled,true);
     assert.ok(d.querySelector('a[href="/contact.html"]'));

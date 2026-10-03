@@ -1,13 +1,14 @@
 import React from 'react';
 import Journey from './Journey.jsx';
 import Assistant from './Assistant';
+import CraUpdates from './CraUpdates.jsx';
 import './scene-experience.css';
 
 export const views = [
   ['top', 'Arrival'], ['services', 'Personal & business'],
   ['services-more', 'Ongoing support'], ['clients', 'Who we help'],
   ['about', 'A clearer picture'], ['checklist', 'Be prepared'],
-  ['faq', 'Your questions'], ['contact', 'Your next step'],
+  ['faq', 'Your questions'], ['updates', 'CRA updates'], ['contact', 'Your next step'],
 ];
 const serviceIds = ['personal-tax','corporate-tax','bookkeeping','payroll','gst-hst','statements','registration','audit'];
 
@@ -111,7 +112,7 @@ export default function SceneExperience({intro, paused, setPaused, replay, servi
     window.addEventListener('keydown', keyboard);
     return () => {window.removeEventListener('keydown', keyboard); tourTrigger.current?.focus();};
   }, [tour]);
-  const titles = ['Peace of mind.', 'Your numbers. Our care.', 'Keep your business moving.', 'Support for your situation.', 'From paperwork to a clearer picture.', 'A little preparation goes a long way.', 'Questions, made simple.', 'Let’s make the next step clear.'];
+  const titles = ['Peace of mind.', 'Your numbers. Our care.', 'Keep your business moving.', 'Support for your situation.', 'From paperwork to a clearer picture.', 'A little preparation goes a long way.', 'Questions, made simple.', 'The latest from CRA.', 'Let’s make the next step clear.'];
   return <main className={'vision-site cinema-ready' + (intro ? ' intro-playing' : '')} inert={intro ? true : undefined}>
     <Journey intro={intro} paused={paused} progress={view / (views.length - 1)} />
     <div className={'vision-interface view-' + view + (departing ? ' vision-departing' : '')} inert={tour ? true : undefined}>
@@ -133,12 +134,13 @@ export default function SceneExperience({intro, paused, setPaused, replay, servi
           {view === 4 && <><p>Good financial support brings the details together so you can see your next step.</p><ol className="vision-steps"><li><strong>Start with your situation.</strong><span>Tell us what you need. Plain language is welcome.</span></li><li><strong>Make a plan together.</strong><span>Understand the service, scope and information needed.</span></li><li><strong>Move forward, organized.</strong><span>Keep your filings, payroll and records in view.</span></li></ol><a className="scene-link" href="/about.html">Meet Hairouna ↗</a></>}
           {view === 5 && <><p>Gather your income slips, identification, receipts and self-employment records. Our Canadian tax checklist helps you get organized before filing.</p><a className="scene-link" href="/checklist.html">Open your checklist ↗</a></>}
           {view === 6 && <div className="vision-faq">{faqs.map(([q,a],i) => <div key={q}><button aria-expanded={faq === i} onClick={() => setFaq(faq === i ? -1 : i)}>{q}<span aria-hidden="true">{faq === i ? '−' : '+'}</span></button>{faq === i && <p>{a}</p>}</div>)}</div>}
-          {view === 7 && <><p>Book a free, no-pressure consultation. In person in Brampton, or virtually across Canada.</p><a className="scene-link" href="/contact.html">Book a consultation ↗</a><div className="vision-contact"><a href="tel:+14169081916">(416) 908-1916</a><a href="https://wa.me/14169081916" target="_blank" rel="noreferrer">WhatsApp ↗</a><a href="mailto:info@hairounaholdingsinc.com">Email Hairouna ↗</a></div><small className="vision-legal">© {new Date().getFullYear()} Hairouna Business Solutions Inc.<br/>General information only; not professional advice.</small></>}
+          {view === 7 && <CraUpdates />}
+          {view === 8 && <><p>Book a free, no-pressure consultation. In person in Brampton, or virtually across Canada.</p><a className="scene-link" href="/contact.html">Book a consultation ↗</a><div className="vision-contact"><a href="tel:+14169081916">(416) 908-1916</a><a href="https://wa.me/14169081916" target="_blank" rel="noreferrer">WhatsApp ↗</a><a href="mailto:info@hairounaholdingsinc.com">Email Hairouna ↗</a></div><small className="vision-legal">© {new Date().getFullYear()} Hairouna Business Solutions Inc.<br/>General information only; not professional advice.</small></>}
         </div>
       </section>
       <nav className="vision-controls" aria-label="Journey views">
         <button onClick={() => move(view-1)} disabled={view === 0} aria-label="Previous view">← Back</button>
-        <span aria-live="polite" aria-atomic="true">{String(view+1).padStart(2,'0')} / 08 <span className="view-name">{views[view][1]}</span></span>
+        <span aria-live="polite" aria-atomic="true">{String(view+1).padStart(2,'0')} / {String(views.length).padStart(2,'0')} <span className="view-name">{views[view][1]}</span></span>
         <button onClick={() => move(view+1)} disabled={view === views.length-1} aria-label="Next view">Next →</button>
       </nav>
       <div className="vision-utilities"><button onClick={() => setPaused(!paused)} aria-pressed={paused}>{paused ? 'Resume motion' : 'Pause motion'}</button><button onClick={replay}>Replay intro</button><button ref={tourTrigger} onClick={() => setTour(true)}>Watch tour</button><button onClick={() => setAssistant(true)} aria-expanded={assistant}>Ask HB</button></div>
