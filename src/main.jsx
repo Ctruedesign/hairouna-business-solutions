@@ -491,6 +491,19 @@ function App() {
         </header>
         <section className="hero" id="top">
           <div className="hero-grain" />
+          <div className="living-landscape" aria-hidden="true">
+            <div className="landscape-stars" />
+            <div className="landscape-moon" />
+            <div className="mountain-layer mountain-far" />
+            <div className="mountain-layer mountain-near" />
+            <div className="landscape-mist mist-one" />
+            <div className="landscape-mist mist-two" />
+            <div className="butterfly-flight">
+              <i className="butterfly-wing wing-left" />
+              <i className="butterfly-wing wing-right" />
+              <b />
+            </div>
+          </div>
           <div className="atelier-horizon" aria-hidden="true">
             <i />
             <i />
