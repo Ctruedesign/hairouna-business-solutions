@@ -2252,3 +2252,11 @@ html[data-motion="paused"] .clarity-frame {
 @media(prefers-reduced-motion:reduce) {
   .cinema-ready .tour-card,.cinema-ready .atelier-horizon { transform:none; }
 }
+
+
+/* Hairline — restrained interactive service network */
+.hairline-business-network{width:min(100%,390px);margin:1.35rem 0 1.8rem;--hairline-plate:#06111f;--hairline-hi:#f0c85a;--hairline-edge:#d8e0ec;--hairline-mid:#7f93ad;--hairline-lo:#263a54;--hairline-stroke:.9}
+.hairline-business-network>div{width:100%}
+.hairline-business-network>span{display:block;margin-top:.35rem;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted,#8fa3bd)}
+@media(max-width:700px){.hairline-business-network{width:min(100%,320px);margin-inline:auto}.hairline-business-network>span{text-align:center}}
+@media(prefers-reduced-motion:reduce){.hairline-business-network>span{display:none}}
