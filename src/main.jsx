@@ -1,4 +1,5 @@
 import React from "react";
+import { Hub } from "@lucasmarkes/hairline/react";
 import { createRoot } from "react-dom/client";
 import {
   Building2,
@@ -292,6 +293,10 @@ function ClarityScene({ paused }) {
             Good financial support brings the details together — so you can see
             your next step.
           </p>
+          <div className="hairline-business-network" aria-label="Interactive Hairouna service network">
+            <Hub intensity={0.62} theme="dark" play={!paused} aria-label="Hairouna services connected around one clear financial picture" />
+            <span>Move across the network</span>
+          </div>
           <ol className="clarity-steps">
             <li>
               <span>01</span>
