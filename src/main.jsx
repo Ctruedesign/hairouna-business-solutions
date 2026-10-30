@@ -1,5 +1,4 @@
 import React from "react";
-import { Hub } from "@lucasmarkes/hairline/react";
 import { createRoot } from "react-dom/client";
 import {
   Building2,
@@ -223,6 +222,20 @@ function GlassDocument({ paused }) {
   );
 }
 
+function HairlineBusinessNetwork({ paused }) {
+  const mount = React.useRef(null);
+  React.useEffect(() => {
+    let figure;
+    let cancelled = false;
+    const url = "https://cdn.jsdelivr.net/npm/@lucasmarkes/hairline@0.5.1/+esm";
+    import(/* @vite-ignore */ url).then(({ hub }) => {
+      if (!cancelled && mount.current) figure = hub(mount.current, { intensity: 0.62, theme: "dark", play: !paused, label: "Hairouna services connected around one clear financial picture" });
+    }).catch(() => { if (mount.current) mount.current.hidden = true; });
+    return () => { cancelled = true; figure?.destroy(); };
+  }, [paused]);
+  return <div className="hairline-business-network" aria-label="Interactive Hairouna service network"><div ref={mount} /><span>Move across the network</span></div>;
+}
+
 function ClarityScene({ paused }) {
   const scene = React.useRef(null);
   React.useEffect(() => {
@@ -293,10 +306,7 @@ function ClarityScene({ paused }) {
             Good financial support brings the details together — so you can see
             your next step.
           </p>
-          <div className="hairline-business-network" aria-label="Interactive Hairouna service network">
-            <Hub intensity={0.62} theme="dark" play={!paused} aria-label="Hairouna services connected around one clear financial picture" />
-            <span>Move across the network</span>
-          </div>
+          <HairlineBusinessNetwork paused={paused} />
           <ol className="clarity-steps">
             <li>
               <span>01</span>
