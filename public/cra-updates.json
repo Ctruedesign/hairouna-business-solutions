@@ -1,40 +1,56 @@
 {
-  "checkedAt": "2026-10-03T20:05:50.144Z",
-  "attemptedAt": "2026-10-03T20:05:50.144Z",
+  "checkedAt": "2026-11-01T17:46:00.903Z",
+  "attemptedAt": "2026-11-01T17:46:00.903Z",
   "status": "ok",
   "sources": [
     {
       "id": "individuals",
       "label": "Individuals",
-      "checkedAt": "2026-10-03T20:05:50.144Z",
+      "checkedAt": "2026-11-01T17:46:00.903Z",
       "status": "ok"
     },
     {
       "id": "businesses",
       "label": "Businesses",
-      "checkedAt": "2026-10-03T20:05:50.144Z",
+      "checkedAt": "2026-11-01T17:46:00.903Z",
       "status": "ok"
     },
     {
       "id": "gst-hst",
       "label": "GST/HST",
-      "checkedAt": "2026-10-03T20:05:50.144Z",
+      "checkedAt": "2026-11-01T17:46:00.903Z",
       "status": "ok"
     },
     {
       "id": "news",
       "label": "Tax tips & alerts",
-      "checkedAt": "2026-10-03T20:05:50.144Z",
+      "checkedAt": "2026-11-01T17:46:00.903Z",
       "status": "ok"
     },
     {
       "id": "announcements",
       "label": "CRA announcements",
-      "checkedAt": "2026-10-03T20:05:50.144Z",
+      "checkedAt": "2026-11-01T17:46:00.903Z",
       "status": "ok"
     }
   ],
   "items": [
+    {
+      "title": "Don’t wait until tax time to take action in your CRA account",
+      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/do-not-wait-until-tax-time-to-take-action-in-your-cra-account.html",
+      "publishedAt": "2026-10-29T15:30:00.000Z",
+      "categories": [
+        "news"
+      ]
+    },
+    {
+      "title": "Small Business Week is here! Find new tax information and resources for your business",
+      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/small-business-week-here-find-new-tax-information-resources-for-business.html",
+      "publishedAt": "2026-10-20T13:30:00.000Z",
+      "categories": [
+        "news"
+      ]
+    },
     {
       "title": "Protecting taxpayer information: How the CRA prevents, detects, and addresses fraud",
       "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/protecting-taxpayer-information.html",
@@ -300,22 +316,6 @@
       ]
     },
     {
-      "title": "CRA account users are encouraged to add a backup multi-factor authentication option",
-      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/cra-account-users-encouraged-add-backup-multi-factor-authentication-option",
-      "publishedAt": "2026-02-09T14:00:00.000Z",
-      "categories": [
-        "news"
-      ]
-    },
-    {
-      "title": "Trucking industry: Make sure you’re meeting your reporting obligations",
-      "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2026/trucking-industry-meeting-reporting-obligations.html",
-      "publishedAt": "2026-02-05T14:00:00.000Z",
-      "categories": [
-        "news"
-      ]
-    },
-    {
       "title": "Secretary of State Long announces renewed funding for tax clinics for the 55th anniversary of the CVITP",
       "url": "https://www.canada.ca/en/revenue-agency/news/2026/02/secretary-of-state-long-announces-renewed-funding-for-tax-clinics-for-the-55th-anniversary-of-the-cvitp.html",
       "publishedAt": "2026-02-03T17:00:00.000Z",
@@ -354,23 +354,7 @@
       "categories": [
         "announcements"
       ]
-    },
-    {
-      "title": "The Minister of Finance and National Revenue and the Secretary of State (Canada Revenue Agency and Financial Institutions) respond to the Auditor General’s report: Canada Revenue Agency - contact centres",
-      "url": "https://www.canada.ca/en/revenue-agency/news/2025/10/the-minister-of-finance-and-national-revenue-and-the-secretary-of-state-canada-revenue-agency-and-financial-institutions-respond-to-the-auditor-gen.html",
-      "publishedAt": "2025-10-21T18:01:00.000Z",
-      "categories": [
-        "announcements"
-      ]
-    },
-    {
-      "title": "Mid-point Update – The CRA’s 100-day Service Improvement Plan",
-      "url": "https://www.canada.ca/en/revenue-agency/news/2025/10/mid-point-update--the-cras-100-day-service-improvement-plan.html",
-      "publishedAt": "2025-10-20T13:20:00.000Z",
-      "categories": [
-        "announcements"
-      ]
     }
   ],
-  "nextCheckAt": "2026-11-01T12:00:00.000Z"
+  "nextCheckAt": "2026-12-01T12:00:00.000Z"
 }
